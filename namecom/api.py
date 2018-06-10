@@ -69,3 +69,4 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_create_domain, CreateDomainResult)
 
 
+__all__ = ['DomainApi']

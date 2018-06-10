@@ -123,3 +123,7 @@ class CreateDomainResult(RequestResult):
         self.domain = None
         self.order = 0
         self.totalPaid = 0
+
+
+__all__ = ['Domain', 'DomainSearchResult', 'Contacts', 'Contact', 'DomainSearchResult',
+           'ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult']
