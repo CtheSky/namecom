@@ -14,11 +14,18 @@ def parse_list_domains(result, response):
 def parse_get_domain(result, response):
     data = response.json()
 
-    result.domain = data.get('contacts')
-    result.domain = data
+    result.domain = Domain.from_json(data)
 
 
 def parse_search(result, response):
     data = response.json()
 
     result.results = [DomainSearchResult(**obj) for obj in data.get('results', [])]
+
+
+def parse_create_domain(result, response):
+    data = response.json()
+
+    result.domain = Domain.from_json(data.get('domain'))
+    result.order = data.get('order')
+    result.totalPaid = data.get('totalPaid')

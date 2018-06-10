@@ -39,8 +39,8 @@ class DomainApi(_ApiBase):
         resp = self._do('GET')
         return self._parse_result(resp, parse_list_domains, ListDomainsResult)
 
-    def get_domain(self, domain):
-        resp = self._do('GET', relative_path='/{domain}'.format(domain=domain))
+    def get_domain(self, domainName):
+        resp = self._do('GET', relative_path='/{domainName}'.format(domainName=domainName))
         return self._parse_result(resp, parse_get_domain, GetDomainResult)
 
     def search(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
@@ -53,3 +53,19 @@ class DomainApi(_ApiBase):
 
         resp = self._do('POST', relative_path=':search', data=data)
         return self._parse_result(resp, parse_search, SearchResult)
+
+    def create_domain(self, domain, purchasePrice, purchaseType='registration',
+                      years=1, tldRequirements=None, promoCode=None):
+        data = json.dumps({
+            'domain': vars(domain),
+            'purchasePrice': purchasePrice,
+            'purchaseType': purchaseType,
+            'years': years,
+            'tldRequirements': tldRequirements if tldRequirements else [],
+            'promoCode': promoCode
+        })
+
+        resp = self._do('POST', data=data)
+        return self._parse_result(resp, parse_create_domain, CreateDomainResult)
+
+

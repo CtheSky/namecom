@@ -3,7 +3,7 @@
 
 class Domain:
 
-    def __init__(self, domainName, locked, expireDate, createDate,
+    def __init__(self, domainName, locked=None, expireDate=None, createDate=None, contacts=None,
                  nameservers=None, privacyEnabled=None, autorenewEnabled=None, renewalPrice=None):
         self.domainName = domainName
         self.nameservers = nameservers
@@ -13,9 +13,20 @@ class Domain:
         self.expireDate = expireDate
         self.createDate = createDate
         self.renewalPrice = renewalPrice
+        self.contacts = contacts
 
     def __str__(self):
         return 'Domain: domainName[%s]' % self.domainName
+
+    @classmethod
+    def from_json(cls, data):
+        if not data:
+            return None
+
+        domain = Domain(**data)
+        domain.contacts = Contacts.from_json(data.get('contacts'))
+
+        return domain
 
 
 class Contacts:
@@ -26,10 +37,22 @@ class Contacts:
         self.tech = tech
         self.billing = billing
 
+    @classmethod
+    def from_json(cls, data):
+        if not data:
+            return None
+
+        kwargs = {
+            field: Contact(**data.get(field))
+            for field in ['registrant', 'admin', 'tech', 'billing']
+        }
+        return Contacts(**kwargs)
+
 
 class Contact:
 
-    def __init__(self, firstName, lastName, companyName, address1, address2, city, state, zip, country, phone, fax, email):
+    def __init__(self, firstName, lastName, companyName=None, address1=None, address2=None, city=None,
+                 state=None, zip=None, country=None, phone=None, fax=None, email=None):
         self.firstName = firstName
         self.lastName = lastName
         self.compayName = companyName
@@ -90,3 +113,13 @@ class SearchResult(RequestResult):
         super(SearchResult, self).__init__(resp)
 
         self.results = []
+
+
+class CreateDomainResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CreateDomainResult, self).__init__(resp)
+
+        self.domain = None
+        self.order = 0
+        self.totalPaid = 0
