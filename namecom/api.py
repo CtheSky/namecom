@@ -27,7 +27,7 @@ class _ApiBase(object):
 
     def _parse_result(self, resp, parse_func, klass):
         result = klass(resp)
-        parse_func(result, resp)
+        parse_func(result, resp.json())
         return result
 
 
