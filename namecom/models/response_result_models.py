@@ -1,6 +1,7 @@
 # encoding=utf-8
 
-__all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult']
+__all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult',
+           'EnableAutorenewResult', 'DisableAutorenewResult']
 
 
 class RequestResult(object):
@@ -26,7 +27,6 @@ class GetDomainResult(RequestResult):
         super(GetDomainResult, self).__init__(resp)
 
         self.domain = None
-        self.contacts = None
 
 
 class SearchResult(RequestResult):
@@ -45,3 +45,19 @@ class CreateDomainResult(RequestResult):
         self.domain = None
         self.order = 0
         self.totalPaid = 0
+
+
+class EnableAutorenewResult(RequestResult):
+
+    def __init__(self, resp):
+        super(EnableAutorenewResult, self).__init__(resp)
+
+        self. domain = None
+
+
+class DisableAutorenewResult(RequestResult):
+
+    def __init__(self, resp):
+        super(DisableAutorenewResult, self).__init__(resp)
+
+        self. domain = None

@@ -29,3 +29,15 @@ def parse_create_domain(result, response):
     result.domain = Domain.from_json(data.get('domain'))
     result.order = data.get('order')
     result.totalPaid = data.get('totalPaid')
+
+
+def parse_enable_autorenew(result, response):
+    data = response.json()
+
+    result.domain = Domain.from_json(data)
+
+
+def parse_disable_autorenew(result, response):
+    data = response.json()
+
+    result.domain = Domain.from_json(data)

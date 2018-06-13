@@ -1,5 +1,7 @@
 # encoding=utf-8
 
+__all__ = ['DomainApi']
+
 import requests
 import json
 
@@ -68,5 +70,12 @@ class DomainApi(_ApiBase):
         resp = self._do('POST', data=data)
         return self._parse_result(resp, parse_create_domain, CreateDomainResult)
 
+    def enable_autorenew(self, domainName):
+        resp = self._do('POST', relative_path='/{domainName}:enableAutorenew'.format(domainName=domainName))
+        return self._parse_result(resp, parse_enable_autorenew, EnableAutorenewResult)
 
-__all__ = ['DomainApi']
+    def disable_autorenew(self, domainName):
+        resp = self._do('POST', relative_path='/{domainName}:disableAutorenew'.format(domainName=domainName))
+        return self._parse_result(resp, parse_disable_autorenew, DisableAutorenewResult)
+
+

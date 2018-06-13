@@ -54,3 +54,16 @@ class DomainApiTestCase(unittest.TestCase):
         self.assertIsNotNone(create_domain_result.domain)
         self.assertIsNotNone(create_domain_result.order)
         self.assertIsNotNone(create_domain_result.totalPaid)
+
+    def test_enable_autorenew(self):
+        enable_autorenew_result = api.enable_autorenew(existing_domain.domainName)
+
+        domain = enable_autorenew_result.domain
+        self.assertTrue(domain.autorenewEnabled)
+
+    def test_disable_autorenew(self):
+        disable_autorenew_result = api.disable_autorenew(existing_domain.domainName)
+
+        domain = disable_autorenew_result.domain
+        self.assertFalse(domain.autorenewEnabled)
+
