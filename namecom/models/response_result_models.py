@@ -1,7 +1,7 @@
 # encoding=utf-8
 
 __all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult',
-           'EnableAutorenewResult', 'DisableAutorenewResult']
+           'EnableAutorenewResult', 'DisableAutorenewResult', 'SetNameserversResult']
 
 
 class RequestResult(object):
@@ -61,3 +61,12 @@ class DisableAutorenewResult(RequestResult):
         super(DisableAutorenewResult, self).__init__(resp)
 
         self. domain = None
+
+
+class SetNameserversResult(RequestResult):
+
+    def __init__(self, resp):
+        super(SetNameserversResult, self).__init__(resp)
+
+        self. domain = None
+

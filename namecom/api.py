@@ -78,4 +78,9 @@ class DomainApi(_ApiBase):
         resp = self._do('POST', relative_path='/{domainName}:disableAutorenew'.format(domainName=domainName))
         return self._parse_result(resp, parse_disable_autorenew, DisableAutorenewResult)
 
+    def set_nameservers(self, domainName, nameservers):
+        resp = self._do('POST', relative_path='/{domainName}:setNameservers'.format(domainName=domainName))
+        return self._parse_result(resp, parse_set_nameservers, SetNameserversResult)
+
+
 

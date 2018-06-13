@@ -41,3 +41,9 @@ def parse_disable_autorenew(result, response):
     data = response.json()
 
     result.domain = Domain.from_json(data)
+
+
+def parse_set_nameservers(result, response):
+    data = response.json()
+
+    result.domain = Domain.from_json(data)

@@ -67,3 +67,9 @@ class DomainApiTestCase(unittest.TestCase):
         domain = disable_autorenew_result.domain
         self.assertFalse(domain.autorenewEnabled)
 
+    def test_set_nameservers(self):
+        nameservers = ['ns1.name.com', 'ns2.name.com']
+        set_nameservers_result = api.set_nameservers(existing_domain.domainName, nameservers)
+
+        domain = set_nameservers_result.domain
+        self.assertEqual(domain.domainName, existing_domain.domainName)
