@@ -79,7 +79,11 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_disable_autorenew, DisableAutorenewResult)
 
     def set_nameservers(self, domainName, nameservers):
-        resp = self._do('POST', relative_path='/{domainName}:setNameservers'.format(domainName=domainName))
+        data = json.dumps({
+            'nameservers': nameservers
+        })
+
+        resp = self._do('POST', relative_path='/{domainName}:setNameservers'.format(domainName=domainName), data=data)
         return self._parse_result(resp, parse_set_nameservers, SetNameserversResult)
 
     def get_auth_code_for_domain(self, domainName):
