@@ -33,3 +33,7 @@ def parse_disable_autorenew(result, data):
 
 def parse_set_nameservers(result, data):
     result.domain = Domain.from_json(data)
+
+
+def parse_get_authcode(result, data):
+    result.authCode = data.get('authCode')

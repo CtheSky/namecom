@@ -82,5 +82,7 @@ class DomainApi(_ApiBase):
         resp = self._do('POST', relative_path='/{domainName}:setNameservers'.format(domainName=domainName))
         return self._parse_result(resp, parse_set_nameservers, SetNameserversResult)
 
-
+    def get_auth_code_for_domain(self, domainName):
+        resp = self._do('GET',  relative_path='/{domainName}:getAuthCode'.format(domainName=domainName))
+        return self._parse_result(resp, parse_get_authcode, GetAuthCodeForDomainResult)
 

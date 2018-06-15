@@ -71,5 +71,12 @@ class DomainApiTestCase(unittest.TestCase):
         nameservers = ['ns1.name.com', 'ns2.name.com']
         set_nameservers_result = api.set_nameservers(existing_domain.domainName, nameservers)
 
+        # test name since test api doesn't return name servers in response
         domain = set_nameservers_result.domain
         self.assertEqual(domain.domainName, existing_domain.domainName)
+
+    def test_get_auth_code_for_domai(self):
+        get_auth_code_result = api.get_auth_code_for_domain(existing_domain.domainName)
+
+        authCode = get_auth_code_result.authCode
+        self.assertTrue(authCode)

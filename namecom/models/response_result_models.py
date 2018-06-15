@@ -1,7 +1,8 @@
 # encoding=utf-8
 
 __all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult',
-           'EnableAutorenewResult', 'DisableAutorenewResult', 'SetNameserversResult']
+           'EnableAutorenewResult', 'DisableAutorenewResult', 'SetNameserversResult',
+           'GetAuthCodeForDomainResult']
 
 
 class RequestResult(object):
@@ -70,3 +71,10 @@ class SetNameserversResult(RequestResult):
 
         self. domain = None
 
+
+class GetAuthCodeForDomainResult(RequestResult):
+
+    def __init__(self, resp):
+        super(GetAuthCodeForDomainResult, self).__init__(resp)
+
+        self.authCode = ''
