@@ -74,8 +74,20 @@ class DomainApiTestCase(unittest.TestCase):
         domain = set_nameservers_result.domain
         self.assertListEqual(domain.nameservers, nameservers)
 
-    def test_get_auth_code_for_domai(self):
+    def test_get_auth_code_for_domain(self):
         get_auth_code_result = api.get_auth_code_for_domain(existing_domain.domainName)
 
         authCode = get_auth_code_result.authCode
         self.assertTrue(authCode)
+
+    def test_lock_domain(self):
+        lock_domain_result = api.lock_domain(existing_domain.domainName)
+
+        domain = lock_domain_result.domain
+        self.assertTrue(domain.locked)
+
+    def test_unlock_domain(self):
+        unlock_domain_result = api.unlock_domain(existing_domain.domainName)
+
+        domain = unlock_domain_result.domain
+        self.assertFalse(domain.locked)

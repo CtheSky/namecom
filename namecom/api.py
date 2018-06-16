@@ -90,3 +90,10 @@ class DomainApi(_ApiBase):
         resp = self._do('GET',  relative_path='/{domainName}:getAuthCode'.format(domainName=domainName))
         return self._parse_result(resp, parse_get_authcode, GetAuthCodeForDomainResult)
 
+    def lock_domain(self, domainName):
+        resp = self._do('POST', relative_path='/{domainName}:lock'.format(domainName=domainName))
+        return self._parse_result(resp, parse_lock_domain, LockDomainResult)
+
+    def unlock_domain(self, domainName):
+        resp = self._do('POST', relative_path='/{domainName}:unlock'.format(domainName=domainName))
+        return self._parse_result(resp, parse_unlock_domain, UnlockDomainResult)

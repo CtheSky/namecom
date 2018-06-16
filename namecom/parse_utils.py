@@ -37,3 +37,11 @@ def parse_set_nameservers(result, data):
 
 def parse_get_authcode(result, data):
     result.authCode = data.get('authCode')
+
+
+def parse_lock_domain(result, data):
+    result.domain = Domain.from_json(data)
+
+
+def parse_unlock_domain(result, data):
+    result.domain = Domain.from_json(data)

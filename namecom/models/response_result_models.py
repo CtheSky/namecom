@@ -2,7 +2,7 @@
 
 __all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult',
            'EnableAutorenewResult', 'DisableAutorenewResult', 'SetNameserversResult',
-           'GetAuthCodeForDomainResult']
+           'GetAuthCodeForDomainResult', 'LockDomainResult', 'UnlockDomainResult']
 
 
 class RequestResult(object):
@@ -78,3 +78,19 @@ class GetAuthCodeForDomainResult(RequestResult):
         super(GetAuthCodeForDomainResult, self).__init__(resp)
 
         self.authCode = ''
+
+
+class LockDomainResult(RequestResult):
+
+    def __init__(self, resp):
+        super(LockDomainResult, self).__init__(resp)
+
+        self. domain = None
+
+
+class UnlockDomainResult(RequestResult):
+
+    def __init__(self, resp):
+        super(UnlockDomainResult, self).__init__(resp)
+
+        self. domain = None
