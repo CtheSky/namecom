@@ -13,15 +13,6 @@ TEST_ALL = os.environ.get('TEST_ALL')
 
 class DomainApiTestCase(unittest.TestCase):
 
-    def test_search(self):
-        search_result = api.search(keyword='cthesky', timeout=5000)
-
-        results = search_result.results
-        self.assertTrue(len(results))
-        self.assertTrue(all([_.domainName for _ in results]))
-        self.assertTrue(all([_.sld for _ in results]))
-        self.assertTrue(all([_.tld for _ in results]))
-
     def test_list_domains(self):
         list_domains_result = api.list_domains()
 
@@ -91,3 +82,32 @@ class DomainApiTestCase(unittest.TestCase):
 
         domain = unlock_domain_result.domain
         self.assertFalse(domain.locked)
+
+    def test_check_availability(self):
+        check_availability_result = api.check_availability(domainNames=[existing_domain.domainName])
+
+        results = check_availability_result.results
+        self.assertTrue(len(results) == 1)
+
+        search_result = results[0]
+        self.assertTrue(search_result.domainName, existing_domain.domainName)
+
+    def test_search(self):
+        search_result = api.search(keyword='cthesky', timeout=5000)
+
+        results = search_result.results
+        self.assertTrue(len(results))
+        self.assertTrue(all([_.domainName for _ in results]))
+        self.assertTrue(all([_.sld for _ in results]))
+        self.assertTrue(all([_.tld for _ in results]))
+        self.assertIn('cthesky', [_.sld for _ in results])
+
+    def test_search_stream(self):
+        search_stream_result = api.search_stream(keyword='cthesky', timeout=5000)
+
+        results = search_stream_result.results
+        self.assertTrue(len(results))
+        self.assertTrue(all([_.domainName for _ in results]))
+        self.assertTrue(all([_.sld for _ in results]))
+        self.assertTrue(all([_.tld for _ in results]))
+        self.assertIn('cthesky', [_.sld for _ in results])

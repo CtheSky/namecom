@@ -81,3 +81,10 @@ class DomainSearchResult:
         self.purchasePrice = purchasePrice
         self.purchaseType = purchaseType
         self.renewalPrice = renewalPrice
+
+    @classmethod
+    def from_json(cls, data):
+        if not data:
+            return None
+
+        return DomainSearchResult(**data)

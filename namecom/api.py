@@ -45,17 +45,6 @@ class DomainApi(_ApiBase):
         resp = self._do('GET', relative_path='/{domainName}'.format(domainName=domainName))
         return self._parse_result(resp, parse_get_domain, GetDomainResult)
 
-    def search(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
-        data = json.dumps({
-            'keyword': keyword,
-            'tldFilter': tldFilter if tldFilter else [],
-            'timeout': timeout,
-            'promoCode': promoCode
-        })
-
-        resp = self._do('POST', relative_path=':search', data=data)
-        return self._parse_result(resp, parse_search, SearchResult)
-
     def create_domain(self, domain, purchasePrice, purchaseType='registration',
                       years=1, tldRequirements=None, promoCode=None):
         data = json.dumps({
@@ -97,3 +86,37 @@ class DomainApi(_ApiBase):
     def unlock_domain(self, domainName):
         resp = self._do('POST', relative_path='/{domainName}:unlock'.format(domainName=domainName))
         return self._parse_result(resp, parse_unlock_domain, UnlockDomainResult)
+
+    def check_availability(self, domainNames, promoCode=None):
+        data = json.dumps({
+            'domainNames': domainNames,
+            'promoCode': promoCode
+        })
+
+        resp = self._do('POST', relative_path=':checkAvailability', data=data)
+        return self._parse_result(resp, parse_check_availability, CheckAvailabilityResult)
+
+    def search(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
+        data = json.dumps({
+            'keyword': keyword,
+            'tldFilter': tldFilter if tldFilter else [],
+            'timeout': timeout,
+            'promoCode': promoCode
+        })
+
+        resp = self._do('POST', relative_path=':search', data=data)
+        return self._parse_result(resp, parse_search, SearchResult)
+
+    def search_stream(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
+        data = json.dumps({
+            'keyword': keyword,
+            'tldFilter': tldFilter if tldFilter else [],
+            'timeout': timeout,
+            'promoCode': promoCode
+        })
+
+        resp = self._do('POST', relative_path=':searchStream', data=data)
+        result = SearchStreamResult(resp)
+        parse_search_stream(result, [json.loads(obj) for obj in resp.content.strip().split('\n')])
+
+        return result
