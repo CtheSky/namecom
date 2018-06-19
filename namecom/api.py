@@ -48,7 +48,7 @@ class DomainApi(_ApiBase):
     def create_domain(self, domain, purchasePrice, purchaseType='registration',
                       years=1, tldRequirements=None, promoCode=None):
         data = json.dumps({
-            'domain': vars(domain),
+            'domain': domain.to_dict(),
             'purchasePrice': purchasePrice,
             'purchaseType': purchaseType,
             'years': years,
@@ -74,6 +74,14 @@ class DomainApi(_ApiBase):
 
         resp = self._do('POST', relative_path='/{domainName}:setNameservers'.format(domainName=domainName), data=data)
         return self._parse_result(resp, parse_set_nameservers, SetNameserversResult)
+
+    def set_contacts(self, domainName, contacts):
+        data = json.dumps({
+            'contacts': contacts.to_dict()
+        })
+
+        resp = self._do('POST', relative_path='/{domainName}:setContacts'.format(domainName=domainName), data=data)
+        return self._parse_result(resp, parse_set_contacts, SetContactsResult)
 
     def get_auth_code_for_domain(self, domainName):
         resp = self._do('GET',  relative_path='/{domainName}:getAuthCode'.format(domainName=domainName))

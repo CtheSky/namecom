@@ -3,7 +3,20 @@
 __all__ = ['Domain', 'Contacts', 'Contact', 'DomainSearchResult']
 
 
-class Domain:
+class DataModel(object):
+
+    @classmethod
+    def from_dict(cls, data):
+        raise NotImplemented
+
+    def to_dict(self):
+        return {
+            k: v.to_dict() if isinstance(v, DataModel) else v
+            for k, v in self.__dict__.items()
+        }
+
+
+class Domain(DataModel):
 
     def __init__(self, domainName, locked=None, expireDate=None, createDate=None, contacts=None,
                  nameservers=None, privacyEnabled=None, autorenewEnabled=None, renewalPrice=None):
@@ -21,17 +34,17 @@ class Domain:
         return 'Domain: domainName[%s]' % self.domainName
 
     @classmethod
-    def from_json(cls, data):
+    def from_dict(cls, data):
         if not data:
             return None
 
         domain = Domain(**data)
-        domain.contacts = Contacts.from_json(data.get('contacts'))
+        domain.contacts = Contacts.from_dict(data.get('contacts'))
 
         return domain
 
 
-class Contacts:
+class Contacts(DataModel):
 
     def __init__(self, registrant, admin, tech, billing):
         self.registrant = registrant
@@ -40,7 +53,7 @@ class Contacts:
         self.billing = billing
 
     @classmethod
-    def from_json(cls, data):
+    def from_dict(cls, data):
         if not data:
             return None
 
@@ -51,7 +64,7 @@ class Contacts:
         return Contacts(**kwargs)
 
 
-class Contact:
+class Contact(DataModel):
 
     def __init__(self, firstName, lastName, companyName=None, address1=None, address2=None, city=None,
                  state=None, zip=None, country=None, phone=None, fax=None, email=None):
@@ -69,7 +82,7 @@ class Contact:
         self.email = email
 
 
-class DomainSearchResult:
+class DomainSearchResult(DataModel):
 
     def __init__(self, domainName, sld, tld, purchasable=None,
                  premium=None, purchasePrice=None, purchaseType=None, renewalPrice=None):
@@ -83,7 +96,7 @@ class DomainSearchResult:
         self.renewalPrice = renewalPrice
 
     @classmethod
-    def from_json(cls, data):
+    def from_dict(cls, data):
         if not data:
             return None
 

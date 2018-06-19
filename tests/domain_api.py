@@ -3,12 +3,21 @@
 import os
 import unittest
 
-from namecom import DomainApi, Domain
+from namecom import DomainApi, Domain, Contact, Contacts
 from . import test_env_auth
 
-api = DomainApi(test_env_auth)
-existing_domain = Domain(domainName='cthesky.band')
 TEST_ALL = os.environ.get('TEST_ALL')
+
+api = DomainApi(test_env_auth)
+
+contact = Contact(
+    firstName='Tianhong', lastName='Chu', phone='+86.13818231324', email='cthesky@yeah.net',
+    country='CN', city='Shanghai', state='Shanghai', zip='200090',
+    address1='Room 501, Building 18, 3031 ChangYang Road, YangPu District, Shanghai City')
+contacts = Contacts(admin=contact, tech=contact, registrant=contact, billing=contact)
+existing_domain = Domain(domainName='cthesky.band',
+                         contacts=contacts,
+                         nameservers=['ns2fln.name.com', 'ns3cna.name.com'])
 
 
 class DomainApiTestCase(unittest.TestCase):
@@ -59,11 +68,16 @@ class DomainApiTestCase(unittest.TestCase):
         self.assertFalse(domain.autorenewEnabled)
 
     def test_set_nameservers(self):
-        nameservers = ['ns2fln.name.com', 'ns3cna.name.com']
-        set_nameservers_result = api.set_nameservers(existing_domain.domainName, nameservers)
+        set_nameservers_result = api.set_nameservers(existing_domain.domainName, existing_domain.nameservers)
 
         domain = set_nameservers_result.domain
-        self.assertListEqual(domain.nameservers, nameservers)
+        self.assertListEqual(domain.nameservers, existing_domain.nameservers)
+
+    def test_set_contacts(self):
+        set_contacts_result = api.set_contacts(existing_domain.domainName, existing_domain.contacts)
+
+        domain = set_contacts_result.domain
+        self.assertDictEqual(domain.contacts.to_dict(), existing_domain.contacts.to_dict())
 
     def test_get_auth_code_for_domain(self):
         get_auth_code_result = api.get_auth_code_for_domain(existing_domain.domainName)
