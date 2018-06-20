@@ -68,6 +68,18 @@ class DomainApiTestCase(unittest.TestCase):
         domain = set_contacts_result.domain
         self.assertDictEqual(domain.contacts.to_dict(), domain_sample.contacts.to_dict())
 
+    @unittest.skipUnless(TEST_ALL, "save credit on testing account")
+    def test_renew_domain(self):
+        enable_autorenew_result = api.enable_autorenew(domain_sample.domainName)
+        domain = enable_autorenew_result.domain
+
+        renew_domain_result = api.renew_domain(domainName=domain.domainName, purchasePrice=domain.renewalPrice)
+
+        print renew_domain_result.domain, renew_domain_result.order, renew_domain_result.totalPaid
+        self.assertIsNotNone(renew_domain_result.domain)
+        self.assertIsNotNone(renew_domain_result.order)
+        self.assertIsNotNone(renew_domain_result.totalPaid)
+
     def test_get_auth_code_for_domain(self):
         get_auth_code_result = api.get_auth_code_for_domain(domain_sample.domainName)
 

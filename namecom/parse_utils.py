@@ -35,6 +35,12 @@ def parse_set_contacts(result, data):
     result.domain = Domain.from_dict(data)
 
 
+def parse_renew_domain(result, data):
+    result.domain = Domain.from_dict(data.get('domain'))
+    result.order = data.get('order')
+    result.totalPaid = data.get('totalPaid')
+
+
 def parse_get_authcode(result, data):
     result.authCode = data.get('authCode')
 

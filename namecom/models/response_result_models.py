@@ -3,7 +3,8 @@
 __all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult',
            'EnableAutorenewResult', 'DisableAutorenewResult', 'SetNameserversResult',
            'GetAuthCodeForDomainResult', 'LockDomainResult', 'UnlockDomainResult',
-           'CheckAvailabilityResult', 'SearchStreamResult', 'SetContactsResult']
+           'CheckAvailabilityResult', 'SearchStreamResult', 'SetContactsResult',
+           'RenewDomainResult']
 
 
 class RequestResult(object):
@@ -45,8 +46,8 @@ class CreateDomainResult(RequestResult):
         super(CreateDomainResult, self).__init__(resp)
 
         self.domain = None
-        self.order = 0
-        self.totalPaid = 0
+        self.order = None
+        self.totalPaid = None
 
 
 class EnableAutorenewResult(RequestResult):
@@ -79,6 +80,16 @@ class SetContactsResult(RequestResult):
         super(SetContactsResult, self).__init__(resp)
 
         self.domain = None
+
+
+class RenewDomainResult(RequestResult):
+
+    def __init__(self, resp):
+        super(RenewDomainResult, self).__init__(resp)
+
+        self.domain = None
+        self.order = None
+        self.totalPaid = None
 
 
 class GetAuthCodeForDomainResult(RequestResult):
