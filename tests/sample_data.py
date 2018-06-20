@@ -10,3 +10,8 @@ contacts = Contacts(admin=contact, tech=contact, registrant=contact, billing=con
 domain = Domain(domainName='cthesky.band',
                 nameservers=['ns2fln.name.com', 'ns3cna.name.com'],
                 contacts=contacts)
+
+domain2 = Domain(domainName='cthesky.irish',
+                 nameservers=['ns2fln.name.com', 'ns3cna.name.com'],
+                 contacts=contacts
+                 )

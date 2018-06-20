@@ -93,6 +93,16 @@ class DomainApi(_ApiBase):
         resp = self._do('POST', relative_path='/{domainName}:renew'.format(domainName=domainName), data=data)
         return self._parse_result(resp, parse_renew_domain, RenewDomainResult)
 
+    def purchase_privacy(self, domainName, purchasePrice, years=1, promoCode=None):
+        data = json.dumps({
+            'purchasePrice': purchasePrice,
+            'years': years,
+            'promoCode': promoCode
+        })
+
+        resp = self._do('POST', relative_path='/{domainName}:purchasePrivacy'.format(domainName=domainName), data=data)
+        return self._parse_result(resp, parse_purchase_privacy, PurchasePrivacyResult)
+
     def get_auth_code_for_domain(self, domainName):
         resp = self._do('GET',  relative_path='/{domainName}:getAuthCode'.format(domainName=domainName))
         return self._parse_result(resp, parse_get_authcode, GetAuthCodeForDomainResult)
