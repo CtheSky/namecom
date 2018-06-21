@@ -1,6 +1,6 @@
 # encoding=utf-8
 
-from .models import *
+from ..models import *
 
 
 def parse_list_domains(result, data):

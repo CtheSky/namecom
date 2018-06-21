@@ -3,9 +3,8 @@
 __all__ = ['DomainApi']
 
 import requests
-import json
 
-from parse_utils import *
+from .utils import *
 from .models import *
 
 PRODUCT_API_HOST = 'https://api.name.com'
@@ -47,8 +46,8 @@ class DomainApi(_ApiBase):
 
     def create_domain(self, domain, purchasePrice, purchaseType='registration',
                       years=1, tldRequirements=None, promoCode=None):
-        data = json.dumps({
-            'domain': domain.to_dict(),
+        data = json_dumps({
+            'domain': domain,
             'purchasePrice': purchasePrice,
             'purchaseType': purchaseType,
             'years': years,
@@ -68,7 +67,7 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_disable_autorenew, DisableAutorenewResult)
 
     def set_nameservers(self, domainName, nameservers):
-        data = json.dumps({
+        data = json_dumps({
             'nameservers': nameservers
         })
 
@@ -76,15 +75,15 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_set_nameservers, SetNameserversResult)
 
     def set_contacts(self, domainName, contacts):
-        data = json.dumps({
-            'contacts': contacts.to_dict()
+        data = json_dumps({
+            'contacts': contacts
         })
 
         resp = self._do('POST', relative_path='/{domainName}:setContacts'.format(domainName=domainName), data=data)
         return self._parse_result(resp, parse_set_contacts, SetContactsResult)
 
     def renew_domain(self, domainName, purchasePrice, years=1, promoCode=None):
-        data = json.dumps({
+        data = json_dumps({
             'purchasePrice': purchasePrice,
             'years': years,
             'promoCode': promoCode
@@ -94,7 +93,7 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_renew_domain, RenewDomainResult)
 
     def purchase_privacy(self, domainName, purchasePrice, years=1, promoCode=None):
-        data = json.dumps({
+        data = json_dumps({
             'purchasePrice': purchasePrice,
             'years': years,
             'promoCode': promoCode
@@ -116,7 +115,7 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_unlock_domain, UnlockDomainResult)
 
     def check_availability(self, domainNames, promoCode=None):
-        data = json.dumps({
+        data = json_dumps({
             'domainNames': domainNames,
             'promoCode': promoCode
         })
@@ -125,7 +124,7 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_check_availability, CheckAvailabilityResult)
 
     def search(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
-        data = json.dumps({
+        data = json_dumps({
             'keyword': keyword,
             'tldFilter': tldFilter if tldFilter else [],
             'timeout': timeout,
@@ -136,7 +135,7 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_search, SearchResult)
 
     def search_stream(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
-        data = json.dumps({
+        data = json_dumps({
             'keyword': keyword,
             'tldFilter': tldFilter if tldFilter else [],
             'timeout': timeout,

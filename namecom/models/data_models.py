@@ -1,6 +1,6 @@
 # encoding=utf-8
 
-__all__ = ['Domain', 'Contacts', 'Contact', 'DomainSearchResult']
+__all__ = ['Domain', 'Contacts', 'Contact', 'DomainSearchResult', 'DataModel']
 
 
 class DataModel(object):
