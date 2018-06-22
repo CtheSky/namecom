@@ -5,7 +5,8 @@ __all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomain
            'GetAuthCodeForDomainResult', 'LockDomainResult', 'UnlockDomainResult',
            'CheckAvailabilityResult', 'SearchStreamResult', 'SetContactsResult',
            'RenewDomainResult', 'PurchasePrivacyResult', 'ListRecordsResult',
-           'GetRecordResult', 'CreateRecordResult']
+           'GetRecordResult', 'CreateRecordResult', 'UpdateRecordResult',
+           'DeleteRecordResult']
 
 
 class RequestResult(object):
@@ -40,6 +41,18 @@ class CreateRecordResult(RequestResult):
         super(CreateRecordResult, self).__init__(resp)
 
         self.record = None
+
+
+class UpdateRecordResult(RequestResult):
+
+    def __init__(self, resp):
+        super(UpdateRecordResult, self).__init__(resp)
+
+        self.record = None
+
+
+class DeleteRecordResult(RequestResult):
+    pass
 
 
 class ListDomainsResult(RequestResult):

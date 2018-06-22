@@ -17,6 +17,6 @@ domain2 = Domain(domainName='cthesky.irish',
                  nameservers=['ns2fln.name.com', 'ns3cna.name.com'],
                  contacts=contacts)
 
-record = Record(id=357756, domainName=u'cthesky.band', host=u'test',
-                fqdn=u'test.cthesky.band.', type=u'A',
-                answer=u'10.0.0.1', ttl=300)
+record = Record(id=357756, domainName='cthesky.band', host='test',
+                fqdn='test.cthesky.band.', type='A',
+                answer='10.0.0.1', ttl=300)

@@ -15,6 +15,14 @@ def parse_create_record(result, data):
     result.record = Record.from_dict(data)
 
 
+def parse_update_record(result, data):
+    result.record = Record.from_dict(data)
+
+
+def parse_delete_record(result, data):
+    pass
+
+
 def parse_list_domains(result, data):
     result.domains = [Domain.from_dict(obj) for obj in data.get('domains', [])]
     result.nextPage = data.get('nextPage')

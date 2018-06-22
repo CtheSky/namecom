@@ -56,6 +56,22 @@ class DnsApi(_ApiBase):
         resp = self._do('POST', data=data)
         return self._parse_result(resp, parse_create_record, CreateRecordResult)
 
+    def update_record(self, id, host=None, type=None, answer=None, ttl=300, priority=None):
+        data = json.dumps({
+            'host': host,
+            'type': type,
+            'answer': answer,
+            'ttl': ttl,
+            'priority': priority
+        })
+
+        resp = self._do('PUT', relative_path='/{id}'.format(id=id), data=data)
+        return self._parse_result(resp, parse_update_record, UpdateRecordResult)
+
+    def delete_record(self, id):
+        resp = self._do('DELETE', relative_path='/{id}'.format(id=id))
+        return self._parse_result(resp, parse_delete_record, DeleteRecordResult)
+
 
 class DomainApi(_ApiBase):
 
