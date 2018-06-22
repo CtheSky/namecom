@@ -1,10 +1,11 @@
-# encoding=utf-8
+# -*- coding: utf-8 -*-
 
 __all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult',
            'EnableAutorenewResult', 'DisableAutorenewResult', 'SetNameserversResult',
            'GetAuthCodeForDomainResult', 'LockDomainResult', 'UnlockDomainResult',
            'CheckAvailabilityResult', 'SearchStreamResult', 'SetContactsResult',
-           'RenewDomainResult', 'PurchasePrivacyResult']
+           'RenewDomainResult', 'PurchasePrivacyResult', 'ListRecordsResult',
+           'GetRecordResult', 'CreateRecordResult']
 
 
 class RequestResult(object):
@@ -12,6 +13,33 @@ class RequestResult(object):
         self.resp = resp
         self.status_code = resp.status_code
         self.headers = resp.headers
+
+
+class ListRecordsResult(RequestResult):
+
+    def __init__(self, resp):
+        super(ListRecordsResult, self).__init__(resp)
+
+        self.records = []
+
+    def __iter__(self):
+        return iter(self.records)
+
+
+class GetRecordResult(RequestResult):
+
+    def __init__(self, resp):
+        super(GetRecordResult, self).__init__(resp)
+
+        self.record = None
+
+
+class CreateRecordResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CreateRecordResult, self).__init__(resp)
+
+        self.record = None
 
 
 class ListDomainsResult(RequestResult):

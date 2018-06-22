@@ -1,6 +1,6 @@
 # encoding=utf-8
 
-__all__ = ['Domain', 'Contacts', 'Contact', 'DomainSearchResult', 'DataModel']
+__all__ = ['Record', 'Domain', 'Contacts', 'Contact', 'DomainSearchResult', 'DataModel']
 
 
 class DataModel(object):
@@ -14,6 +14,39 @@ class DataModel(object):
             k: v.to_dict() if isinstance(v, DataModel) else v
             for k, v in self.__dict__.items()
         }
+
+
+class Record(DataModel):
+
+    def __init__(self, id, domainName, host, fqdn, type, answer, ttl=300, priority=None):
+        self.id = int(id)
+        self.domainName = domainName
+        self.host = host
+        self.fqdn = fqdn
+        self.type = type
+        self.answer = answer
+        self.ttl = ttl
+        self.priority = int(priority) if priority else None
+
+    def __eq__(self, other):
+        if isinstance(other, Record):
+            return self is other or self.__dict__ == other.__dict__
+        return NotImplemented
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __hash__(self):
+        return hash(tuple(sorted(self.__dict__.items())))
+
+    def __str__(self):
+        return 'Record: id[%s] host[%s] type[%s] answer[%s]' % (self.id, self.host, self.type, self.answer)
+
+    @classmethod
+    def from_dict(cls, data):
+        if not data:
+            return None
+        return Record(**data)
 
 
 class Domain(DataModel):

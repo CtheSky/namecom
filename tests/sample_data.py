@@ -1,4 +1,6 @@
-from namecom import Domain, Contact, Contacts
+# -*- coding: utf-8 -*-
+
+from namecom import Domain, Contact, Contacts, Record
 
 contact = Contact(
     firstName='Tianhong', lastName='Chu', phone='+86.13818231324', email='cthesky@yeah.net',
@@ -13,5 +15,8 @@ domain = Domain(domainName='cthesky.band',
 
 domain2 = Domain(domainName='cthesky.irish',
                  nameservers=['ns2fln.name.com', 'ns3cna.name.com'],
-                 contacts=contacts
-                 )
+                 contacts=contacts)
+
+record = Record(id=357756, domainName=u'cthesky.band', host=u'test',
+                fqdn=u'test.cthesky.band.', type=u'A',
+                answer=u'10.0.0.1', ttl=300)

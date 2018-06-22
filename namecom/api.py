@@ -1,6 +1,6 @@
 # encoding=utf-8
 
-__all__ = ['DomainApi']
+__all__ = ['DnsApi', 'DomainApi']
 
 import requests
 
@@ -28,6 +28,33 @@ class _ApiBase(object):
         result = klass(resp)
         parse_func(result, resp.json())
         return result
+
+
+class DnsApi(_ApiBase):
+
+    def __init__(self, domainName, auth):
+        super(DnsApi, self).__init__(auth)
+        self.endpoint = '/v4/domains/{domain_name}/records'.format(domain_name=domainName)
+
+    def list_records(self):
+        resp = self._do('GET')
+        return self._parse_result(resp, parse_list_records, ListRecordsResult)
+
+    def get_record(self, id):
+        resp = self._do('GET', relative_path='/{id}'.format(id=id))
+        return self._parse_result(resp, parse_get_record, GetRecordResult)
+
+    def create_record(self, host, type, answer, ttl=300, priority=None):
+        data = json_dumps({
+            'host': host,
+            'type': type,
+            'answer': answer,
+            'ttl': ttl,
+            'priority': priority
+        })
+
+        resp = self._do('POST', data=data)
+        return self._parse_result(resp, parse_create_record, CreateRecordResult)
 
 
 class DomainApi(_ApiBase):
