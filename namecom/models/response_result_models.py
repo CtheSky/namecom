@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-__all__ = ['ListDomainsResult', 'GetDomainResult', 'SearchResult', 'CreateDomainResult',
-           'EnableAutorenewResult', 'DisableAutorenewResult', 'SetNameserversResult',
-           'GetAuthCodeForDomainResult', 'LockDomainResult', 'UnlockDomainResult',
-           'CheckAvailabilityResult', 'SearchStreamResult', 'SetContactsResult',
-           'RenewDomainResult', 'PurchasePrivacyResult', 'ListRecordsResult',
-           'GetRecordResult', 'CreateRecordResult', 'UpdateRecordResult',
-           'DeleteRecordResult']
-
 
 class RequestResult(object):
     def __init__(self, resp):

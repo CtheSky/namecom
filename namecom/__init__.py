@@ -7,5 +7,5 @@ from .models import *
 __all__ = (
         api.__all__ +
         auth.__all__ +
-        models.__all__
+        models.__data_models__
 )

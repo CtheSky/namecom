@@ -1,6 +1,4 @@
-# encoding=utf-8
-
-__all__ = ['Record', 'Domain', 'Contacts', 'Contact', 'DomainSearchResult', 'DataModel']
+# -*- coding: utf-8 -*-
 
 
 class DataModel(object):
