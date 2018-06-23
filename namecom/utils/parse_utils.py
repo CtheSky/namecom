@@ -23,6 +23,13 @@ def parse_delete_record(result, data):
     pass
 
 
+def parse_create_dnssec(result, data):
+    result.dnssec = DNSSEC.from_dict(data)
+
+
+def parse_delete_dnssec(result, data):
+    pass
+
 def parse_list_domains(result, data):
     result.domains = [Domain.from_dict(obj) for obj in data.get('domains', [])]
     result.nextPage = data.get('nextPage')

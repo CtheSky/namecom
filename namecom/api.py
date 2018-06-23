@@ -1,6 +1,6 @@
 # encoding=utf-8
 
-__all__ = ['DnsApi', 'DomainApi']
+__all__ = ['DnsApi', 'DnssecApi', 'DomainApi']
 
 import requests
 
@@ -71,6 +71,28 @@ class DnsApi(_ApiBase):
     def delete_record(self, id):
         resp = self._do('DELETE', relative_path='/{id}'.format(id=id))
         return self._parse_result(resp, parse_delete_record, DeleteRecordResult)
+
+
+class DnssecApi(_ApiBase):
+
+    def __init__(self, domainName, auth):
+        super(DnssecApi, self).__init__(auth)
+        self.endpoint = '/v4/domains/{domainName}/dnssec'.format(domainName=domainName)
+
+    def create_dnssec(self, keyTag, algorithm, digestType, digest):
+        data = json_dumps({
+            'keyTag': keyTag,
+            'algorithm': algorithm,
+            'digestType': digestType,
+            'digest': digest
+        })
+
+        resp = self._do('POST', data=data)
+        return self._parse_result(resp, parse_create_dnssec, CreateDnssecResult)
+
+    def delete_dnssec(self, digest):
+        resp = self._do('DELETE', relative_path='/{digest}'.format(digest=digest))
+        return self._parse_result(resp, parse_delete_dnssec, DeleteDnssecResult)
 
 
 class DomainApi(_ApiBase):

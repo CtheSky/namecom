@@ -47,6 +47,18 @@ class DeleteRecordResult(RequestResult):
     pass
 
 
+class CreateDnssecResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CreateDnssecResult, self).__init__(resp)
+
+        self.dnssec = None
+
+
+class DeleteDnssecResult(RequestResult):
+    pass
+
+
 class ListDomainsResult(RequestResult):
 
     def __init__(self, resp):

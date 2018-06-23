@@ -13,6 +13,17 @@ class DataModel(object):
             for k, v in self.__dict__.items()
         }
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self is other or self.__dict__ == other.__dict__
+        return NotImplemented
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __hash__(self):
+        return hash(tuple(sorted(self.__dict__.items())))
+
 
 class Record(DataModel):
 
@@ -26,17 +37,6 @@ class Record(DataModel):
         self.ttl = ttl
         self.priority = int(priority) if priority else None
 
-    def __eq__(self, other):
-        if isinstance(other, Record):
-            return self is other or self.__dict__ == other.__dict__
-        return NotImplemented
-
-    def __ne__(self, other):
-        return not self == other
-
-    def __hash__(self):
-        return hash(tuple(sorted(self.__dict__.items())))
-
     def __str__(self):
         return 'Record: id[%s] host[%s] type[%s] answer[%s]' % (self.id, self.host, self.type, self.answer)
 
@@ -45,6 +45,34 @@ class Record(DataModel):
         if not data:
             return None
         return Record(**data)
+
+
+class DNSSEC(DataModel):
+
+    def __init__(self, domainName, keyTag, algorithm, digestType, digest):
+
+        self.domainName = domainName
+
+        # KeyTag contains the key tag value of the DNSKEY RR that validates this signature.
+        # The algorithm to generate it is here: https://tools.ietf.org/html/rfc4034#appendix-B
+        self.keyTag = keyTag
+
+        # Algorithm is an integer identifying the algorithm used for signing.
+        # Valid values can be found here: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
+        self.algorithm = algorithm
+
+        # DigestType is an integer identifying the algorithm used to create the digest.
+        # Valid values can be found here: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml
+        self.digestType = digestType
+
+        # Digest is a digest of the DNSKEY RR that is registered with the registry.
+        self.digest = digest
+
+    @classmethod
+    def from_dict(cls, data):
+        if not data:
+            return None
+        return DNSSEC(**data)
 
 
 class Domain(DataModel):
