@@ -1,5 +1,3 @@
-# encoding=utf-8
-
 __all__ = ['DnsApi', 'DnssecApi', 'DomainApi']
 
 import requests

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from namecom import Domain, Contact, Contacts, Record, DNSSEC
 
 contact = Contact(

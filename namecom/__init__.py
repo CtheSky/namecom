@@ -1,5 +1,3 @@
-# encoding=utf-8
-
 from .api import *
 from .auth import *
 from .models import *

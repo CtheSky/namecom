@@ -1,4 +1,4 @@
-# encoding=utf-8
+__all__ = ['Auth']
 
 
 class Auth:
@@ -11,6 +11,3 @@ class Auth:
     @property
     def auth_tuple(self):
         return self.username, self.token
-
-
-__all__ = ['Auth']

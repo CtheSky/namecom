@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 class RequestResult(object):
     def __init__(self, resp):
         self.resp = resp
