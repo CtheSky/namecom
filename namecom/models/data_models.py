@@ -1,7 +1,7 @@
 class DataModel(object):
 
     @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls, dct):
         raise NotImplemented
 
     def to_dict(self):
@@ -38,10 +38,10 @@ class Record(DataModel):
         return 'Record: id[%s] host[%s] type[%s] answer[%s]' % (self.id, self.host, self.type, self.answer)
 
     @classmethod
-    def from_dict(cls, data):
-        if not data:
+    def from_dict(cls, dct):
+        if not dct:
             return None
-        return Record(**data)
+        return Record(**dct)
 
 
 class DNSSEC(DataModel):
@@ -66,10 +66,10 @@ class DNSSEC(DataModel):
         self.digest = digest
 
     @classmethod
-    def from_dict(cls, data):
-        if not data:
+    def from_dict(cls, dct):
+        if not dct:
             return None
-        return DNSSEC(**data)
+        return DNSSEC(**dct)
 
 
 class Domain(DataModel):
@@ -90,12 +90,12 @@ class Domain(DataModel):
         return 'Domain: domainName[%s]' % self.domainName
 
     @classmethod
-    def from_dict(cls, data):
-        if not data:
+    def from_dict(cls, dct):
+        if not dct:
             return None
 
-        domain = Domain(**data)
-        domain.contacts = Contacts.from_dict(data.get('contacts'))
+        domain = Domain(**dct)
+        domain.contacts = Contacts.from_dict(dct.get('contacts'))
 
         return domain
 
@@ -109,12 +109,12 @@ class Contacts(DataModel):
         self.billing = billing
 
     @classmethod
-    def from_dict(cls, data):
-        if not data:
+    def from_dict(cls, dct):
+        if not dct:
             return None
 
         kwargs = {
-            field: Contact(**data.get(field))
+            field: Contact(**dct.get(field))
             for field in ['registrant', 'admin', 'tech', 'billing']
         }
         return Contacts(**kwargs)
@@ -152,8 +152,8 @@ class DomainSearchResult(DataModel):
         self.renewalPrice = renewalPrice
 
     @classmethod
-    def from_dict(cls, data):
-        if not data:
+    def from_dict(cls, dct):
+        if not dct:
             return None
 
-        return DomainSearchResult(**data)
+        return DomainSearchResult(**dct)
