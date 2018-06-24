@@ -3,11 +3,11 @@ import unittest
 from namecom import DnssecApi
 from . import test_env_auth
 from sample_data import (
-    dnssec as dnssec_sample,
-    dnssec2 as dnssec_sample2
+    dnssec_sample1,
+    dnssec_sample2
 )
 
-api = DnssecApi(domainName=dnssec_sample.domainName, auth=test_env_auth)
+api = DnssecApi(domainName=dnssec_sample1.domainName, auth=test_env_auth)
 
 
 class DnssecApiTestCase(unittest.TestCase):
@@ -26,14 +26,14 @@ class DnssecApiTestCase(unittest.TestCase):
 
     def test_create_delete_dnssec(self):
         create_dnssec_result = api.create_dnssec(
-            keyTag=dnssec_sample.keyTag,
-            algorithm=dnssec_sample.algorithm,
-            digestType=dnssec_sample.digestType,
-            digest=dnssec_sample.digest
+            keyTag=dnssec_sample1.keyTag,
+            algorithm=dnssec_sample1.algorithm,
+            digestType=dnssec_sample1.digestType,
+            digest=dnssec_sample1.digest
         )
 
         dnssec = create_dnssec_result.dnssec
-        self.assertEqual(dnssec, dnssec_sample)
+        self.assertEqual(dnssec, dnssec_sample1)
 
-        delete_dnssec_result = api.delete_dnssec(dnssec_sample.digest)
+        delete_dnssec_result = api.delete_dnssec(dnssec_sample1.digest)
         self.assertEqual(delete_dnssec_result.status_code, 200)
