@@ -44,6 +44,24 @@ class DeleteRecordResult(RequestResult):
     pass
 
 
+class ListDnssecsResult(RequestResult):
+
+    def __init__(self, resp):
+        super(ListDnssecsResult, self).__init__(resp)
+
+        self.dnssecs = []
+        self.nextPage = None
+        self.lastPage = None
+
+
+class GetDnssecResult(RequestResult):
+
+    def __init__(self, resp):
+        super(GetDnssecResult, self).__init__(resp)
+
+        self.dnssec = None
+
+
 class CreateDnssecResult(RequestResult):
 
     def __init__(self, resp):
@@ -62,8 +80,8 @@ class ListDomainsResult(RequestResult):
         super(ListDomainsResult, self).__init__(resp)
 
         self.domains = []
-        self.nextPage = 0
-        self.lastPage = 0
+        self.nextPage = None
+        self.lastPage = None
 
 
 class GetDomainResult(RequestResult):
@@ -97,7 +115,7 @@ class EnableAutorenewResult(RequestResult):
     def __init__(self, resp):
         super(EnableAutorenewResult, self).__init__(resp)
 
-        self. domain = None
+        self.domain = None
 
 
 class DisableAutorenewResult(RequestResult):
@@ -105,7 +123,7 @@ class DisableAutorenewResult(RequestResult):
     def __init__(self, resp):
         super(DisableAutorenewResult, self).__init__(resp)
 
-        self. domain = None
+        self.domain = None
 
 
 class SetNameserversResult(RequestResult):
@@ -113,7 +131,7 @@ class SetNameserversResult(RequestResult):
     def __init__(self, resp):
         super(SetNameserversResult, self).__init__(resp)
 
-        self. domain = None
+        self.domain = None
 
 
 class SetContactsResult(RequestResult):

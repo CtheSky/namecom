@@ -21,6 +21,16 @@ def parse_delete_record(result, dct):
     pass
 
 
+def parse_list_dnssecs(result, dct):
+    result.dnssecs = [DNSSEC.from_dict(obj) for obj in dct.get('dnssec')]
+    result.nextPage = dct.get('nextPage')
+    result.lastPage = dct.get('lastPage')
+
+
+def parse_get_dnssec(result, dct):
+    result.dnssec = DNSSEC.from_dict(dct)
+
+
 def parse_create_dnssec(result, dct):
     result.dnssec = DNSSEC.from_dict(dct)
 

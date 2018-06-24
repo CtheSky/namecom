@@ -21,3 +21,6 @@ record = Record(id=357756, domainName='cthesky.band', host='test',
 
 dnssec = DNSSEC(domainName='cthesky.band', keyTag=30909, algorithm=8, digestType=2,
                 digest='E2D3C916F6DEEAC73294E8268FB5885044A833FC5459588F4A9184CFC41A5766')
+
+dnssec2 = DNSSEC(domainName='cthesky.band', keyTag=33630, algorithm=5, digestType=2,
+                 digest='4177EAEC09A37178357871EBE3FB361CABB2861F12A1D51DDE18CBA2439BB5C1')
