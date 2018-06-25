@@ -1,5 +1,12 @@
 class DataModel(object):
+    """
+    This is base class for data models.
 
+    It provides following utilities:
+      1. class method `from_dict` to construct model from a dict
+      2. instance method `to_dict` to transfer model to a dict
+      3. overrides equality test using __dict__
+    """
     @classmethod
     def from_dict(cls, dct):
         raise NotImplemented
