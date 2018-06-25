@@ -23,16 +23,52 @@ class DataModel(object):
 
 
 class Record(DataModel):
+    """
+    This is a class for an individual DNS resource record.
+
+    Attributes:
+        id (int):
+            Unique record id. Value is ignored on Create, and must match the URI on Update.
+
+        domainName (string):
+            DomainName is the zone that the record belongs to.
+
+        host (string):
+            Host is the hostname relative to the zone: e.g. for a record for blog.example.org,
+            domain would be "example.org" and host would be "blog".
+            An apex record would be specified by either an empty host "" or "@".
+            A SRV record would be specified by "_{service}._{protocal}.{host}":
+            e.g. "_sip._tcp.phone" for _sip._tcp.phone.example.org.
+
+        fqdn (string):
+            FQDN is the Fully Qualified Domain Name. It is the combination of the host and the domain name.
+            It always ends in a ".". FQDN is ignored in CreateRecord, specify via the Host field instead.
+
+        type (string):
+            Type is one of the following: A, AAAA, ANAME, CNAME, MX, NS, SRV, or TXT.
+
+        answer (string):
+            Answer is either the IP address for A or AAAA records; the target for ANAME, CNAME, MX, or NS records;
+            the text for TXT records. For SRV records, answer has the following format:
+            "{weight} {port} {target}" e.g. "1 5061 sip.example.org".
+
+        ttl (int):
+            TTL is the time this record can be cached for in seconds. Name.com allows a minimum TTL of 300,
+            or 5 minutes.
+
+        priority (int):
+            Priority is only required for MX and SRV records, it is ignored for all others.
+    """
 
     def __init__(self, id, domainName, host, fqdn, type, answer, ttl=300, priority=None):
-        self.id = int(id)
+        self.id = id
         self.domainName = domainName
         self.host = host
         self.fqdn = fqdn
         self.type = type
         self.answer = answer
         self.ttl = ttl
-        self.priority = int(priority) if priority else None
+        self.priority = priority
 
     def __str__(self):
         return 'Record: id[%s] host[%s] type[%s] answer[%s]' % (self.id, self.host, self.type, self.answer)
@@ -45,24 +81,35 @@ class Record(DataModel):
 
 
 class DNSSEC(DataModel):
+    """
+    This is a class for Domain Name System Security Extensions (DNSSEC).
+    It contains all the data required to create a DS record at the registry.
+
+    Attributes:
+        domainName (string):
+            DomainName is the domain name.
+
+        keyTag (int):
+            KeyTag contains the key tag value of the DNSKEY RR that validates this signature.
+            The algorithm to generate it is here: https://tools.ietf.org/html/rfc4034#appendix-B
+
+        algorithm (int):
+            Algorithm is an integer identifying the algorithm used for signing. Valid values can be found here:
+            https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
+
+        digestType (int):
+            DigestType is an integer identifying the algorithm used to create the digest. Valid values can be found
+            here: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml
+
+        digest (string):
+            Digest is a digest of the DNSKEY RR that is registered with the registry.
+    """
 
     def __init__(self, domainName, keyTag, algorithm, digestType, digest):
-
         self.domainName = domainName
-
-        # KeyTag contains the key tag value of the DNSKEY RR that validates this signature.
-        # The algorithm to generate it is here: https://tools.ietf.org/html/rfc4034#appendix-B
         self.keyTag = keyTag
-
-        # Algorithm is an integer identifying the algorithm used for signing.
-        # Valid values can be found here: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
         self.algorithm = algorithm
-
-        # DigestType is an integer identifying the algorithm used to create the digest.
-        # Valid values can be found here: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml
         self.digestType = digestType
-
-        # Digest is a digest of the DNSKEY RR that is registered with the registry.
         self.digest = digest
 
     @classmethod
@@ -73,18 +120,50 @@ class DNSSEC(DataModel):
 
 
 class Domain(DataModel):
+    """
+    This class lists all the data for a domain.
+
+    Attributes:
+        domainName (string):
+            DomainName is the punycode encoded value of the domain name.
+
+        nameservers ([]string):
+            Nameservers is the list of nameservers for this domain. If unspecified it defaults to your account
+            default nameservers.
+
+        contacts (*Contacts):
+            Contacts for the domain.
+
+        privacyEnabled (bool):
+            PrivacyEnabled reflects if Whois Privacy is enabled for this domain.
+
+        locked (bool):
+            Locked indicates that the domain cannot be transfered to another registrar.
+
+        autorenewEnabled (bool):
+            AutorenewEnabled indicates if the domain will attempt to renew automatically before expiration.
+
+        expireDate (string):
+            ExpireDate is the date the domain will expire.
+
+        createDate (string):
+            CreateDate is the date the domain was created at the registry.
+
+        renewalPrice (float):
+            RenewalPrice is the price to renew the domain. It may be required for the RenewDomain command.
+    """
 
     def __init__(self, domainName, locked=None, expireDate=None, createDate=None, contacts=None,
                  nameservers=None, privacyEnabled=None, autorenewEnabled=None, renewalPrice=None):
         self.domainName = domainName
         self.nameservers = nameservers
+        self.contacts = contacts
         self.privacyEnabled = privacyEnabled
         self.locked = locked
         self.autorenewEnabled = autorenewEnabled
         self.expireDate = expireDate
         self.createDate = createDate
         self.renewalPrice = renewalPrice
-        self.contacts = contacts
 
     def __str__(self):
         return 'Domain: domainName[%s]' % self.domainName
@@ -101,6 +180,27 @@ class Domain(DataModel):
 
 
 class Contacts(DataModel):
+    """
+    This class stores the contact information for the roles related to domains.
+
+    Attributes:
+        registrant (*Contact):
+            Registrant is the rightful owner of the account and has the right to use and/or sell the domain name.
+            They are able to make changes to all account, domain, and product settings. This information should be
+            reviewed and updated regularly to ensure accuracy.
+
+        admin (*Contact):
+            Registrants often designate an administrative contact to manage their domain name(s). They primarily deal
+            with business information such as the name on record, postal address, and contact information for the
+            official registrant.
+
+        tech (*Contact):
+            The technical contact manages and maintains a domain's nameservers. If you're working with a web designer
+            or someone in a similar role, you many want to assign them as a technical contact.
+
+        billing (*Contact):
+            The billing contact is the party responsible for paying bills for the account and taking care of renewals.
+    """
 
     def __init__(self, registrant, admin, tech, billing):
         self.registrant = registrant
@@ -121,12 +221,55 @@ class Contacts(DataModel):
 
 
 class Contact(DataModel):
+    """
+    This class contains all the contact data.
+
+    Attributes:
+        firstName (string):
+            First name of the contact.
+
+        lastName (string):
+            Last name of the contact.
+
+        companyName (string):
+            Company name of the contact. Leave blank if the contact is an individual as some registries will assume
+            it is a corporate entity otherwise.
+
+        address1 (string):
+            Address1 is the first line of the contact's address.
+
+        address2 (string):
+            Address2 is the second line of the contact's address.
+
+        city (string):
+            City of the contact's address.
+
+        state (string):
+            State or Province for the contact's address.
+
+        zip (string):
+            Zip or Postal Code for the contact's address.
+
+        country (string):
+            Country code for the contact's address. Required to be a ISO 3166-1 alpha-2 code.
+
+        phone (string):
+            Phone number of the contact. Should be specified in the following format: "+cc.llllllll" where cc
+            is the country code and llllllll is the local number.
+
+        fax (string):
+            Fax number of the contact. Should be specified in the following format: "+cc.llllllll" where cc
+            is the country code and llllllll is the local number.
+
+        email (string):
+            Email of the contact. Should be a complete and valid email address.
+    """
 
     def __init__(self, firstName, lastName, companyName=None, address1=None, address2=None, city=None,
                  state=None, zip=None, country=None, phone=None, fax=None, email=None):
         self.firstName = firstName
         self.lastName = lastName
-        self.compayName = companyName
+        self.companyName = companyName
         self.address1 = address1
         self.address2 = address2
         self.city = city
@@ -139,6 +282,36 @@ class Contact(DataModel):
 
 
 class DomainSearchResult(DataModel):
+    """
+    SearchResult is returned by the CheckAvailability, Search, and SearchStream functions.
+
+    Attributes:
+        domainName (string):
+            DomainName is the punycode encoded value of the domain name.
+
+        sld (string):
+            SLD is first portion of the domain_name.
+
+        tld (string):
+            TLD is the rest of the domain_name after the SLD.
+
+        purchasable (bool):
+            Purchaseable indicates whether the search result is available for purchase.
+
+        premium (bool):
+            Premium indicates that this search result is a premium result and the purchase_price needs to be passed to
+            the DomainCreate command.
+
+        purchasePrice (float):
+            PurchasePrice is the price for purchasing this domain for 1 year. Purchase_price is always in USD.
+
+        purchaseType (string):
+            PurchaseType indicates what kind of purchase this result is for. It should be passed to the DomainCreate
+            command.
+
+        renewalPrice (float):
+            RenewalPrice is the annual renewal price for this domain as it may be different then the purchase_price.
+    """
 
     def __init__(self, domainName, sld, tld, purchasable=None,
                  premium=None, purchasePrice=None, purchaseType=None, renewalPrice=None):
