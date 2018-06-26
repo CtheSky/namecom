@@ -10,12 +10,30 @@ TEST_API_HOST = 'https://api.dev.name.com'
 
 
 class _ApiBase(object):
+    """
+    This is the base class for api.
+
+    It provides common utilities for each api:
+      1. http authentication
+      2. send request
+      3. parse result
+      4. error handling
+    """
+
     def __init__(self, auth):
         self.auth = auth
         self.api_host = PRODUCT_API_HOST if not auth.use_test_env else TEST_API_HOST
         self.endpoint = ''
 
     def _do(self, method, relative_path=None, **kwargs):
+        """
+        Used to send the request.
+
+        :param method: http method to use
+        :param relative_path: additional url path after endpoint
+        :param kwargs: keyword arguments that will be passed to request method from requests module
+        :return: response from requests module
+        """
         resp = requests.request(method,
                                 self.api_host + self.endpoint + (relative_path if relative_path else ''),
                                 auth=self.auth.auth_tuple,
@@ -23,26 +41,58 @@ class _ApiBase(object):
         return resp
 
     def _parse_result(self, resp, parse_func, klass):
+        """
+        Used to parse response result.
+
+        :param resp: http response from requests module
+        :param parse_func: helper function from utils.parse_utils module, it parses response and fill the result fields
+        :param klass: the class of parsed response result this method returns
+        :return: an instance of klass with parsed response information
+        """
         result = klass(resp)
         parse_func(result, resp.json())
         return result
 
 
 class DnsApi(_ApiBase):
+    """
+    The api class for DNS.
+    More details at: https://www.name.com/api-docs/DNS
+    """
 
     def __init__(self, domainName, auth):
         super(DnsApi, self).__init__(auth)
         self.endpoint = '/v4/domains/{domain_name}/records'.format(domain_name=domainName)
 
     def list_records(self):
+        """
+        Returns all records for a zone.
+        :return: an instance of ListRecordsResult class with parsed response info
+        """
         resp = self._do('GET')
         return self._parse_result(resp, parse_list_records, ListRecordsResult)
 
     def get_record(self, id):
+        """
+        Returns details about an individual record.
+        :param id: the server-assigned unique identifier for this record
+        :return: an instance of GetRecordResult class with parsed response info
+        """
         resp = self._do('GET', relative_path='/{id}'.format(id=id))
         return self._parse_result(resp, parse_get_record, GetRecordResult)
 
     def create_record(self, host, type, answer, ttl=300, priority=None):
+        """
+        Creates a new record in the zone.
+
+        More details about each param could be found in docstring of Record class.
+        :param host: hostname relative to the zone
+        :param type: dns record type
+        :param answer: dns record answer
+        :param ttl: dns record ttl
+        :param priority: dns record priority
+        :return:
+        """
         data = json_dumps({
             'host': host,
             'type': type,
@@ -55,6 +105,18 @@ class DnsApi(_ApiBase):
         return self._parse_result(resp, parse_create_record, CreateRecordResult)
 
     def update_record(self, id, host=None, type=None, answer=None, ttl=300, priority=None):
+        """
+        Replaces the record with the new record that is passed.
+
+        More details about each param could be found in docstring of Record class.
+        :param id: the server-assigned unique identifier for this record
+        :param host: hostname relative to the zone
+        :param type: dns record type
+        :param answer: dns record answer
+        :param ttl: dns record ttl
+        :param priority: dns record priority
+        :return:
+        """
         data = json.dumps({
             'host': host,
             'type': type,
@@ -67,6 +129,11 @@ class DnsApi(_ApiBase):
         return self._parse_result(resp, parse_update_record, UpdateRecordResult)
 
     def delete_record(self, id):
+        """
+        Deletes a record from the zone.
+        :param id: the server-assigned unique identifier for this record
+        :return: an instance of DeleteRecordResult class with parsed response info
+        """
         resp = self._do('DELETE', relative_path='/{id}'.format(id=id))
         return self._parse_result(resp, parse_delete_record, DeleteRecordResult)
 
