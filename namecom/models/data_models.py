@@ -9,7 +9,9 @@ class DataModel(object):
     """
     @classmethod
     def from_dict(cls, dct):
-        raise NotImplemented
+        if not dct:
+            return None
+        return cls(**dct)
 
     def to_dict(self):
         return {
@@ -80,12 +82,6 @@ class Record(DataModel):
     def __str__(self):
         return 'Record: id[%s] host[%s] type[%s] answer[%s]' % (self.id, self.host, self.type, self.answer)
 
-    @classmethod
-    def from_dict(cls, dct):
-        if not dct:
-            return None
-        return Record(**dct)
-
 
 class DNSSEC(DataModel):
     """
@@ -118,12 +114,6 @@ class DNSSEC(DataModel):
         self.algorithm = algorithm
         self.digestType = digestType
         self.digest = digest
-
-    @classmethod
-    def from_dict(cls, dct):
-        if not dct:
-            return None
-        return DNSSEC(**dct)
 
 
 class Domain(DataModel):
@@ -221,7 +211,7 @@ class Contacts(DataModel):
             return None
 
         kwargs = {
-            field: Contact(**dct.get(field))
+            field: Contact.from_dict(dct.get(field))
             for field in ['registrant', 'admin', 'tech', 'billing']
         }
         return Contacts(**kwargs)
@@ -330,10 +320,3 @@ class DomainSearchResult(DataModel):
         self.purchasePrice = purchasePrice
         self.purchaseType = purchaseType
         self.renewalPrice = renewalPrice
-
-    @classmethod
-    def from_dict(cls, dct):
-        if not dct:
-            return None
-
-        return DomainSearchResult(**dct)
