@@ -19,6 +19,11 @@ class DataModel(object):
             for k, v in self.__dict__.items()
         }
 
+    def __repr__(self):
+        cls_name = self.__class__.__name__
+        params = ', '.join(['{}={!r}'.format(k, v) for k, v in self.__dict__.items()])
+        return '{}({})'.format(cls_name, params)
+
     def __eq__(self, other):
         if isinstance(other, self.__class__):
             return self is other or self.__dict__ == other.__dict__
