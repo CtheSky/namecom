@@ -65,33 +65,52 @@ class DnsApi(_ApiBase):
         self.endpoint = '/v4/domains/{domain_name}/records'.format(domain_name=domainName)
 
     def list_records(self):
-        """
-        Returns all records for a zone.
-        :return: an instance of ListRecordsResult class with parsed response info
+        """Returns all records for a zone.
+
+        Returns
+        -------
+        :class:`~namecom.ListRecordsResult`
+            a response result instance with parsed response info
         """
         resp = self._do('GET')
         return self._parse_result(resp, parse_list_records, ListRecordsResult)
 
     def get_record(self, id):
-        """
-        Returns details about an individual record.
-        :param id: the server-assigned unique identifier for this record
-        :return: an instance of GetRecordResult class with parsed response info
+        """Returns details about an individual record.
+
+        Parameters
+        ----------
+        id : int
+            the server-assigned unique identifier for this record
+
+        Returns
+        -------
+        :class:`~namecom.GetRecordResult`
+            a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{id}'.format(id=id))
         return self._parse_result(resp, parse_get_record, GetRecordResult)
 
     def create_record(self, host, type, answer, ttl=300, priority=None):
-        """
-        Creates a new record in the zone.
+        """Creates a new record in the zone.
 
-        More details about each param could be found in docstring of Record class.
-        :param host: hostname relative to the zone
-        :param type: dns record type
-        :param answer: dns record answer
-        :param ttl: dns record ttl
-        :param priority: dns record priority
-        :return:
+        Parameters
+        ----------
+        host : string
+            hostname relative to the zone
+        type : string
+            dns record type
+        answer : string
+            dns record answer
+        ttl : int
+            dns record ttl
+        priority : int
+            dns record priority
+
+        Returns
+        -------
+        :class:`~namecom.CreateRecordResult`
+            a response result instance with parsed response info
         """
         data = json_dumps({
             'host': host,
@@ -105,17 +124,27 @@ class DnsApi(_ApiBase):
         return self._parse_result(resp, parse_create_record, CreateRecordResult)
 
     def update_record(self, id, host=None, type=None, answer=None, ttl=300, priority=None):
-        """
-        Replaces the record with the new record that is passed.
+        """Replaces the record with the new record that is passed.
 
-        More details about each param could be found in docstring of Record class.
-        :param id: the server-assigned unique identifier for this record
-        :param host: hostname relative to the zone
-        :param type: dns record type
-        :param answer: dns record answer
-        :param ttl: dns record ttl
-        :param priority: dns record priority
-        :return:
+        Parameters
+        ----------
+        id : int
+            the server-assigned unique identifier for this record
+        host : string
+            hostname relative to the zone
+        type : string
+            dns record type
+        answer : string
+            dns record answer
+        ttl : int
+            dns record ttl
+        priority : int
+            dns record priority
+
+        Returns
+        -------
+        :class:`~namecom.UpdateRecordResult`
+            a response result instance with parsed response info
         """
         data = json.dumps({
             'host': host,
@@ -129,10 +158,17 @@ class DnsApi(_ApiBase):
         return self._parse_result(resp, parse_update_record, UpdateRecordResult)
 
     def delete_record(self, id):
-        """
-        Deletes a record from the zone.
-        :param id: the server-assigned unique identifier for this record
-        :return: an instance of DeleteRecordResult class with parsed response info
+        """Deletes a record from the zone.
+
+        Parameters
+        ----------
+        id : int
+            the server-assigned unique identifier for this record
+
+        Returns
+        -------
+        :class:`~namecom.DeleteRecordResult`
+            a response result instance with parsed response info
         """
         resp = self._do('DELETE', relative_path='/{id}'.format(id=id))
         return self._parse_result(resp, parse_delete_record, DeleteRecordResult)
