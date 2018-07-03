@@ -2,6 +2,7 @@ __all__ = ['DnsApi', 'DnssecApi', 'DomainApi']
 
 import requests
 
+from . import exceptions
 from .utils import *
 from .models import *
 
@@ -38,6 +39,10 @@ class _ApiBase(object):
                                 self.api_host + self.endpoint + (relative_path if relative_path else ''),
                                 auth=self.auth.auth_tuple,
                                 **kwargs)
+
+        if resp.status_code // 100 != 2:
+            raise exceptions.make_exception(resp)
+
         return resp
 
     def _parse_result(self, resp, parse_func, klass):
