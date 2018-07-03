@@ -1,4 +1,7 @@
-from namecom import Domain, Contact, Contacts, Record, DNSSEC
+from namecom import Domain, Contact, Contacts, Record, DNSSEC, Auth
+
+correct_auth = Auth('cthesky-test', '96414285232f77557662ba9be585ba926f04dc9b')
+wrong_auth = Auth('cthesky-test', 'wrong token')
 
 contact_sample1 = Contact(
     firstName='Tianhong', lastName='Chu', phone='+86.13818231324', email='cthesky@yeah.net',

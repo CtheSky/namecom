@@ -1,13 +1,15 @@
+import os
 import unittest
 
 from namecom import DomainApi, Domain
-from . import test_env_auth, TEST_ALL
 from sample_data import (
+    correct_auth,
     domain_sample1,
     domain_sample2
 )
 
-api = DomainApi(test_env_auth)
+TEST_ALL = os.environ.get('TEST_ALL')
+api = DomainApi(auth=correct_auth, use_test_env=True)
 
 
 class DomainApiTestCase(unittest.TestCase):

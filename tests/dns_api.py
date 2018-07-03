@@ -1,13 +1,13 @@
 import unittest
 
 from namecom import DnsApi
-from . import test_env_auth
 from sample_data import (
+    correct_auth,
     domain_sample1 as domain_sample,
     record_sample1 as record_sample
 )
 
-api = DnsApi(domainName=domain_sample.domainName, auth=test_env_auth)
+api = DnsApi(domainName=domain_sample.domainName, auth=correct_auth, use_test_env=True)
 
 
 class DnsApiTestCase(unittest.TestCase):

@@ -20,9 +20,9 @@ class _ApiBase(object):
       4. error handling
     """
 
-    def __init__(self, auth):
+    def __init__(self, auth, use_test_env):
         self.auth = auth
-        self.api_host = PRODUCT_API_HOST if not auth.use_test_env else TEST_API_HOST
+        self.api_host = PRODUCT_API_HOST if not use_test_env else TEST_API_HOST
         self.endpoint = ''
 
     def _do(self, method, relative_path=None, **kwargs):
@@ -60,8 +60,8 @@ class DnsApi(_ApiBase):
     More details at: https://www.name.com/api-docs/DNS
     """
 
-    def __init__(self, domainName, auth):
-        super(DnsApi, self).__init__(auth)
+    def __init__(self, domainName, auth, use_test_env=False):
+        super(DnsApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains/{domain_name}/records'.format(domain_name=domainName)
 
     def list_records(self):
@@ -176,8 +176,8 @@ class DnsApi(_ApiBase):
 
 class DnssecApi(_ApiBase):
 
-    def __init__(self, domainName, auth):
-        super(DnssecApi, self).__init__(auth)
+    def __init__(self, domainName, auth, use_test_env=False):
+        super(DnssecApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains/{domainName}/dnssec'.format(domainName=domainName)
 
     def list_dnssecs(self):
@@ -206,8 +206,8 @@ class DnssecApi(_ApiBase):
 
 class DomainApi(_ApiBase):
 
-    def __init__(self, auth):
-        super(DomainApi, self).__init__(auth)
+    def __init__(self, auth, use_test_env=False):
+        super(DomainApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains'
 
     def list_domains(self):

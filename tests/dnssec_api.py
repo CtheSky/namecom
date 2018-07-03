@@ -1,13 +1,13 @@
 import unittest
 
 from namecom import DnssecApi
-from . import test_env_auth
 from sample_data import (
+    correct_auth,
     dnssec_sample1,
     dnssec_sample2
 )
 
-api = DnssecApi(domainName=dnssec_sample1.domainName, auth=test_env_auth)
+api = DnssecApi(domainName=dnssec_sample1.domainName, auth=correct_auth, use_test_env=True)
 
 
 class DnssecApiTestCase(unittest.TestCase):

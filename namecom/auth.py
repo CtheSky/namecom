@@ -3,10 +3,9 @@ __all__ = ['Auth']
 
 class Auth:
 
-    def __init__(self, username, token, use_test_env=False):
+    def __init__(self, username, token):
         self.username = username
         self.token = token
-        self.use_test_env = use_test_env
 
     @property
     def auth_tuple(self):
