@@ -159,3 +159,4 @@ texinfo_documents = [
 
 
 # -- Extension configuration -------------------------------------------------
+autoclass_content = 'both'

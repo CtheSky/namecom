@@ -37,7 +37,7 @@ class _ApiBase(object):
         """
         resp = requests.request(method,
                                 self.api_host + self.endpoint + (relative_path if relative_path else ''),
-                                auth=self.auth.auth_tuple,
+                                auth=(self.auth.username, self.auth.token),
                                 **kwargs)
 
         if resp.status_code // 100 != 2:
@@ -61,11 +61,23 @@ class _ApiBase(object):
 
 class DnsApi(_ApiBase):
     """
-    The api class for DNS.
-    More details at: https://www.name.com/api-docs/DNS
+    The api class for DNS. More details about each parameter :class:`here <namecom.Record>`.
+    Official namecom documentation : https://www.name.com/api-docs/DNS
     """
 
     def __init__(self, domainName, auth, use_test_env=False):
+        """
+        Parameters
+        ----------
+        domainName : string
+            domain that dns records belongs to
+
+        auth : :class:`~namecom.Auth`
+            http authentication to use
+
+        use_test_env : bool
+            whether runs in test environment
+        """
         super(DnsApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains/{domain_name}/records'.format(domain_name=domainName)
 
@@ -180,20 +192,77 @@ class DnsApi(_ApiBase):
 
 
 class DnssecApi(_ApiBase):
+    """
+    The api class for Domain Name System Security Extensions (DNSSEC).
+    More details about each parameter :class:`here <namecom.DNSSEC>`.
+    Official namecom documentation : https://www.name.com/api-docs/DNSSECs
+    """
 
     def __init__(self, domainName, auth, use_test_env=False):
+        """
+        Parameters
+        ----------
+        domainName : string
+            domain to manipulate dnssec on
+
+        auth : :class:`~namecom.Auth`
+            http authentication to use
+
+        use_test_env : bool
+            whether runs in test environment
+        """
         super(DnssecApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains/{domainName}/dnssec'.format(domainName=domainName)
 
     def list_dnssecs(self):
+        """Lists all of the DNSSEC keys registered with the registry.
+
+        Returns
+        -------
+        :class:`~namecom.ListDnssecsResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('GET')
         return self._parse_result(resp, parse_list_dnssecs, ListDnssecsResult)
 
     def get_dnssec(self, digest):
+        """Retrieves the details for a key registered with the registry.
+
+        Parameters
+        ----------
+        digest : string
+            Digest is the digest for the DNSKEY RR to retrieve.
+
+        Returns
+        -------
+        :class:`~namecom.GetDnssecResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('GET', relative_path='/{digest}'.format(digest=digest))
         return self._parse_result(resp, parse_get_dnssec, GetDnssecResult)
 
     def create_dnssec(self, keyTag, algorithm, digestType, digest):
+        """Registers a DNSSEC key with the registry.
+
+        Parameters
+        ----------
+        keyTag : int
+             key tag value of the DNSKEY RR
+
+        algorithm : int
+            an integer identifying the algorithm used for signing
+
+        digestType : int
+            an integer identifying the algorithm used to create the digest
+
+        digest : string
+            a digest of the DNSKEY RR that is registered with the registry
+
+        Returns
+        -------
+        :class:`~namecom.CreateDnssecResult`
+            a response result instance with parsed response info
+        """
         data = json_dumps({
             'keyTag': keyTag,
             'algorithm': algorithm,
@@ -205,6 +274,18 @@ class DnssecApi(_ApiBase):
         return self._parse_result(resp, parse_create_dnssec, CreateDnssecResult)
 
     def delete_dnssec(self, digest):
+        """Removes a DNSSEC key from the registry.
+
+        Parameters
+        ----------
+        digest : string
+            a digest of the DNSKEY RR that is registered with the registry
+
+        Returns
+        -------
+        :class:`~namecom.DeleteDnssecResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('DELETE', relative_path='/{digest}'.format(digest=digest))
         return self._parse_result(resp, parse_delete_dnssec, DeleteDnssecResult)
 
