@@ -26,6 +26,9 @@ Welcome to namecompy's documentation!
 .. autoclass:: Record
 .. autoclass:: DNSSEC
 .. autoclass:: Domain
+.. autoclass:: Contacts
+.. autoclass:: Contact
+
 
 
 Indices and tables

@@ -125,34 +125,35 @@ class Domain(DataModel):
     """
     This class lists all the data for a domain.
 
-    Attributes:
-        domainName (string):
-            DomainName is the punycode encoded value of the domain name.
+    Attributes
+    ----------
+    domainName : string
+        DomainName is the punycode encoded value of the domain name.
 
-        nameservers ([]string):
-            Nameservers is the list of nameservers for this domain. If unspecified it defaults to your account
-            default nameservers.
+    nameservers : []string
+        Nameservers is the list of nameservers for this domain. If unspecified it defaults to your account
+        default nameservers.
 
-        contacts (*Contacts):
-            Contacts for the domain.
+    contacts : :class:`~namecom.Contacts`
+        Contacts for the domain.
 
-        privacyEnabled (bool):
-            PrivacyEnabled reflects if Whois Privacy is enabled for this domain.
+    privacyEnabled : bool
+        PrivacyEnabled reflects if Whois Privacy is enabled for this domain.
 
-        locked (bool):
-            Locked indicates that the domain cannot be transfered to another registrar.
+    locked : bool
+        Locked indicates that the domain cannot be transfered to another registrar.
 
-        autorenewEnabled (bool):
-            AutorenewEnabled indicates if the domain will attempt to renew automatically before expiration.
+    autorenewEnabled : bool
+        AutorenewEnabled indicates if the domain will attempt to renew automatically before expiration.
 
-        expireDate (string):
-            ExpireDate is the date the domain will expire.
+    expireDate : string
+        ExpireDate is the date the domain will expire.
 
-        createDate (string):
-            CreateDate is the date the domain was created at the registry.
+    createDate : string
+        CreateDate is the date the domain was created at the registry.
 
-        renewalPrice (float):
-            RenewalPrice is the price to renew the domain. It may be required for the RenewDomain command.
+    renewalPrice : float
+        RenewalPrice is the price to renew the domain. It may be required for the RenewDomain command.
     """
 
     def __init__(self, domainName, locked=None, expireDate=None, createDate=None, contacts=None,
@@ -185,23 +186,24 @@ class Contacts(DataModel):
     """
     This class stores the contact information for the roles related to domains.
 
-    Attributes:
-        registrant (*Contact):
-            Registrant is the rightful owner of the account and has the right to use and/or sell the domain name.
-            They are able to make changes to all account, domain, and product settings. This information should be
-            reviewed and updated regularly to ensure accuracy.
+    Attributes
+    ----------
+    registrant : :class:`~namecom.Contact`
+        Registrant is the rightful owner of the account and has the right to use and/or sell the domain name.
+        They are able to make changes to all account, domain, and product settings. This information should be
+        reviewed and updated regularly to ensure accuracy.
 
-        admin (*Contact):
-            Registrants often designate an administrative contact to manage their domain name(s). They primarily deal
-            with business information such as the name on record, postal address, and contact information for the
-            official registrant.
+    admin : :class:`~namecom.Contact`
+        Registrants often designate an administrative contact to manage their domain name(s). They primarily deal
+        with business information such as the name on record, postal address, and contact information for the
+        official registrant.
 
-        tech (*Contact):
-            The technical contact manages and maintains a domain's nameservers. If you're working with a web designer
-            or someone in a similar role, you many want to assign them as a technical contact.
+    tech : :class:`~namecom.Contact`
+        The technical contact manages and maintains a domain's nameservers. If you're working with a web designer
+        or someone in a similar role, you many want to assign them as a technical contact.
 
-        billing (*Contact):
-            The billing contact is the party responsible for paying bills for the account and taking care of renewals.
+    billing : :class:`~namecom.Contact`
+        The billing contact is the party responsible for paying bills for the account and taking care of renewals.
     """
 
     def __init__(self, registrant, admin, tech, billing):
