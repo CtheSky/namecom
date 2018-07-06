@@ -291,21 +291,80 @@ class DnssecApi(_ApiBase):
 
 
 class DomainApi(_ApiBase):
+    """
+    The api class for Domain.
+    More details about each parameter :class:`here <namecom.Domain>`.
+    Official namecom documentation : https://www.name.com/api-docs/domain
+    """
 
     def __init__(self, auth, use_test_env=False):
+        """
+        Parameters
+        ----------
+        auth : :class:`~namecom.Auth`
+            http authentication to use
+
+        use_test_env : bool
+            whether runs in test environment
+       """
         super(DomainApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains'
 
     def list_domains(self):
+        """Returns all domains in the account. It omits some information that can be retrieved from GetDomain.
+
+        Returns
+        -------
+        :class:`~namecom.ListDomainsResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('GET')
         return self._parse_result(resp, parse_list_domains, ListDomainsResult)
 
     def get_domain(self, domainName):
+        """Returns details about a specific domain
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to retrieve
+        Returns
+        -------
+        :class:`~namecom.GetDomainResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('GET', relative_path='/{domainName}'.format(domainName=domainName))
         return self._parse_result(resp, parse_get_domain, GetDomainResult)
 
     def create_domain(self, domain, purchasePrice, purchaseType='registration',
                       years=1, tldRequirements=None, promoCode=None):
+        """
+
+        Parameters
+        ----------
+        domain : :class:`~namecom.Domain`
+            the domain object to create
+
+        purchasePrice : float
+            the amount to pay for the domain
+
+        purchaseType : string
+            PurchaseType defaults to "registration" but should be copied from the result of a search command otherwise
+
+        years : int
+            how many years to register the domain for.
+
+        tldRequirements : dict[string -> string]
+           TLDRequirements is a way to pass additional data that is required by some registries
+
+        promoCode : string
+            PromoCode is not yet implemented
+
+        Returns
+        -------
+        :class:`~namecom.CreateDomainResult`
+            a response result instance with parsed response info
+        """
         data = json_dumps({
             'domain': domain,
             'purchasePrice': purchasePrice,
@@ -319,30 +378,59 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_create_domain, CreateDomainResult)
 
     def enable_autorenew(self, domainName):
+        """Enables the domain to be automatically renewed when it gets close to expiring.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to retrieve
+
+        Returns
+        -------
+        :class:`~namecom.EnableAutorenewResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('POST', relative_path='/{domainName}:enableAutorenew'.format(domainName=domainName))
         return self._parse_result(resp, parse_enable_autorenew, EnableAutorenewResult)
 
     def disable_autorenew(self, domainName):
+        """Disables automatic renewals, thus requiring the domain to be renewed manually.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to retrieve
+
+        Returns
+        -------
+        :class:`~namecom.DisableAutorenewResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('POST', relative_path='/{domainName}:disableAutorenew'.format(domainName=domainName))
         return self._parse_result(resp, parse_disable_autorenew, DisableAutorenewResult)
 
-    def set_nameservers(self, domainName, nameservers):
-        data = json_dumps({
-            'nameservers': nameservers
-        })
-
-        resp = self._do('POST', relative_path='/{domainName}:setNameservers'.format(domainName=domainName), data=data)
-        return self._parse_result(resp, parse_set_nameservers, SetNameserversResult)
-
-    def set_contacts(self, domainName, contacts):
-        data = json_dumps({
-            'contacts': contacts
-        })
-
-        resp = self._do('POST', relative_path='/{domainName}:setContacts'.format(domainName=domainName), data=data)
-        return self._parse_result(resp, parse_set_contacts, SetContactsResult)
-
     def renew_domain(self, domainName, purchasePrice, years=1, promoCode=None):
+        """Renew a domain. Purchase_price is required if the renewal is not regularly priced.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to renew
+
+        purchasePrice : float
+            the amount to pay for the domain renewal
+
+        years : int
+            how many years to renew the domain for
+
+        promoCode : string
+            PromoCode is not yet implemented
+
+        Returns
+        -------
+        :class:`~namecom.RenewDomainResult`
+            a response result instance with parsed response info
+        """
         data = json_dumps({
             'purchasePrice': purchasePrice,
             'years': years,
@@ -352,7 +440,44 @@ class DomainApi(_ApiBase):
         resp = self._do('POST', relative_path='/{domainName}:renew'.format(domainName=domainName), data=data)
         return self._parse_result(resp, parse_renew_domain, RenewDomainResult)
 
+    def get_auth_code_for_domain(self, domainName):
+        """Returns the Transfer Authorization Code for the domain.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to renew
+
+        Returns
+        -------
+        :class:`~namecom.GetAuthCodeForDomainResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET', relative_path='/{domainName}:getAuthCode'.format(domainName=domainName))
+        return self._parse_result(resp, parse_get_authcode, GetAuthCodeForDomainResult)
+
     def purchase_privacy(self, domainName, purchasePrice, years=1, promoCode=None):
+        """Add Whois Privacy protection to a domain or will an renew existing subscription.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to renew
+
+        purchasePrice : float
+            the amount to pay for the domain renewal
+
+        years : int
+            how many years to renew the domain for
+
+        promoCode : string
+            PromoCode is not yet implemented
+
+        Returns
+        -------
+        :class:`~namecom.PurchasePrivacyResult`
+            a response result instance with parsed response info
+        """
         data = json_dumps({
             'purchasePrice': purchasePrice,
             'years': years,
@@ -362,19 +487,100 @@ class DomainApi(_ApiBase):
         resp = self._do('POST', relative_path='/{domainName}:purchasePrivacy'.format(domainName=domainName), data=data)
         return self._parse_result(resp, parse_purchase_privacy, PurchasePrivacyResult)
 
-    def get_auth_code_for_domain(self, domainName):
-        resp = self._do('GET',  relative_path='/{domainName}:getAuthCode'.format(domainName=domainName))
-        return self._parse_result(resp, parse_get_authcode, GetAuthCodeForDomainResult)
+    def set_nameservers(self, domainName, nameservers):
+        """Set the nameservers for the Domain.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to set the nameservers for
+
+        nameservers : []string
+            a list of the nameservers to set
+
+        Returns
+        -------
+        :class:`~namecom.SetNameserversResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'nameservers': nameservers
+        })
+
+        resp = self._do('POST', relative_path='/{domainName}:setNameservers'.format(domainName=domainName), data=data)
+        return self._parse_result(resp, parse_set_nameservers, SetNameserversResult)
+
+    def set_contacts(self, domainName, contacts):
+        """"Set the contacts for the Domain.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to set the contacts for
+
+        contacts : Contacts
+            contacts to set
+
+        Returns
+        -------
+        :class:`~namecom.SetContactsResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'contacts': contacts
+        })
+
+        resp = self._do('POST', relative_path='/{domainName}:setContacts'.format(domainName=domainName), data=data)
+        return self._parse_result(resp, parse_set_contacts, SetContactsResult)
 
     def lock_domain(self, domainName):
+        """Lock a domain so that it cannot be transfered to another registrar.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to lock
+
+        Returns
+        -------
+        :class:`~namecom.LockDomainResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('POST', relative_path='/{domainName}:lock'.format(domainName=domainName))
         return self._parse_result(resp, parse_lock_domain, LockDomainResult)
 
     def unlock_domain(self, domainName):
+        """Unlock a domain so that it can be transfered to another registrar.
+
+        Parameters
+        ----------
+        domainName : string
+            name of the domain to unlock
+
+        Returns
+        -------
+        :class:`~namecom.UnlockDomainResult`
+            a response result instance with parsed response info
+        """
         resp = self._do('POST', relative_path='/{domainName}:unlock'.format(domainName=domainName))
         return self._parse_result(resp, parse_unlock_domain, UnlockDomainResult)
 
     def check_availability(self, domainNames, promoCode=None):
+        """Check a list of domains to see if they are purchaseable. A Maximum of 50 domains can be specified.
+
+        Parameters
+        ----------
+        domainNames : []string
+            the list of domains to check if they are available
+
+        promoCode : string
+            PromoCode is not yet implemented
+
+        Returns
+        -------
+        :class:`~namecom.CheckAvailabilityResult`
+            a response result instance with parsed response info
+        """
         data = json_dumps({
             'domainNames': domainNames,
             'promoCode': promoCode
@@ -384,6 +590,27 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_check_availability, CheckAvailabilityResult)
 
     def search(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
+        """Perform a search for specified keywords.
+
+        Parameters
+        ----------
+        keyword : string
+            the search term to search for
+
+        tldFilter : []string
+            TLDFilter will limit results to only contain the specified TLDs
+
+        timeout : int
+            Timeout is a value in milliseconds on how long to perform the search for
+
+        promoCode : string
+            PromoCode is not yet implemented
+
+        Returns
+        -------
+        :class:`~namecom.SearchResult`
+            a response result instance with parsed response info
+        """
         data = json_dumps({
             'keyword': keyword,
             'tldFilter': tldFilter if tldFilter else [],
@@ -395,6 +622,27 @@ class DomainApi(_ApiBase):
         return self._parse_result(resp, parse_search, SearchResult)
 
     def search_stream(self, keyword, tldFilter=None, timeout=1000, promoCode=None):
+        """Return JSON encoded SearchResults as they are recieved from the registry
+
+        Parameters
+        ----------
+        keyword : string
+            the search term to search for
+
+        tldFilter : []string
+            TLDFilter will limit results to only contain the specified TLDs
+
+        timeout : int
+            Timeout is a value in milliseconds on how long to perform the search for
+
+        promoCode : string
+            PromoCode is not yet implemented
+
+        Returns
+        -------
+        :class:`~namecom.SearchStreamResult`
+            a response result instance with parsed response info
+        """
         data = json_dumps({
             'keyword': keyword,
             'tldFilter': tldFilter if tldFilter else [],

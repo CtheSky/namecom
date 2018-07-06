@@ -18,10 +18,14 @@ Welcome to namecompy's documentation!
 .. autoclass:: DnssecApi
    :members:
 
+.. autoclass:: DomainApi
+   :members:
+
 .. autoclass:: Auth
 
 .. autoclass:: Record
 .. autoclass:: DNSSEC
+.. autoclass:: Domain
 
 
 Indices and tables
