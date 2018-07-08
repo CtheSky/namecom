@@ -333,3 +333,24 @@ class DomainSearchResult(DataModel):
         self.purchasePrice = purchasePrice
         self.purchaseType = purchaseType
         self.renewalPrice = renewalPrice
+
+
+class EmailForwarding(DataModel):
+    """
+    EmailForwarding contains all the information for an email forwarding entry.
+
+    Attributes
+    ----------
+    domainName : string
+        DomainName is the domain part of the email address to forward
+
+    emailBox : string
+        DomainName is the domain part of the email address to forward
+
+    emailTo : string
+        EmailTo is the entire email address to forward email to
+    """
+    def __init__(self, domainName, emailBox, emailTo):
+        self.domainName = domainName
+        self.emailBox = emailBox
+        self.emailTo = emailTo

@@ -21,6 +21,10 @@ Welcome to namecompy's documentation!
 .. autoclass:: DomainApi
    :members:
 
+.. autoclass:: EmailForwardingApi
+   :members:
+
+
 .. autoclass:: Auth
 
 .. autoclass:: Record
@@ -28,6 +32,7 @@ Welcome to namecompy's documentation!
 .. autoclass:: Domain
 .. autoclass:: Contacts
 .. autoclass:: Contact
+.. autoclass:: EmailForwarding
 
 
 

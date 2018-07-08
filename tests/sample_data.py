@@ -1,4 +1,4 @@
-from namecom import Domain, Contact, Contacts, Record, DNSSEC, Auth
+from namecom import Domain, Contact, Contacts, Record, DNSSEC, EmailForwarding , Auth
 
 correct_auth = Auth('cthesky-test', '96414285232f77557662ba9be585ba926f04dc9b')
 wrong_auth = Auth('cthesky-test', 'wrong token')
@@ -27,3 +27,7 @@ dnssec_sample1 = DNSSEC(domainName='cthesky.band', keyTag=30909, algorithm=8, di
 
 dnssec_sample2 = DNSSEC(domainName='cthesky.band', keyTag=33630, algorithm=5, digestType=2,
                         digest='4177EAEC09A37178357871EBE3FB361CABB2861F12A1D51DDE18CBA2439BB5C1')
+
+email_forwarding_sample1 = EmailForwarding(domainName='cthesky.band', emailBox='test1', emailTo='cthesky@yeah.net')
+email_forwarding_sample2 = EmailForwarding(domainName='cthesky.band', emailBox='test2', emailTo='cthesky@yeah.net')
+email_forwarding_sample3 = EmailForwarding(domainName='cthesky.band', emailBox='test2', emailTo='cthesky@gmail.com')

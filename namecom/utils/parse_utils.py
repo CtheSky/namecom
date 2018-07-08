@@ -105,3 +105,25 @@ def parse_search(result, dct):
 
 def parse_search_stream(result, dct):
     result.results = [DomainSearchResult.from_dict(obj) for obj in dct]
+
+
+def parse_list_email_forwardings(result, dct):
+    result.email_forwardings = [EmailForwarding.from_dict(obj) for obj in dct.get('emailForwarding', [])]
+    result.nextPage = dct.get('nextPage')
+    result.lastPage = dct.get('lastPage')
+
+
+def parse_get_email_forwarding(result, dct):
+    result.email_forwarding = EmailForwarding.from_dict(dct)
+
+
+def parse_create_email_forwarding(result, dct):
+    result.email_forwarding = EmailForwarding.from_dict(dct)
+
+
+def parse_update_email_forwarding(result, dct):
+    result.email_forwarding = EmailForwarding.from_dict(dct)
+
+
+def parse_delete_email_forwarding(result, dct):
+    pass

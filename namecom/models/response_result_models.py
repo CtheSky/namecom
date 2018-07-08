@@ -200,3 +200,41 @@ class SearchStreamResult(RequestResult):
         super(SearchStreamResult, self).__init__(resp)
 
         self.results = []
+
+
+class ListEmailForwardingsResult(RequestResult):
+
+    def __init__(self, resp):
+        super(ListEmailForwardingsResult, self).__init__(resp)
+
+        self.email_forwardings = []
+        self.nextPage = None
+        self.lastPage = None
+
+
+class GetEmailForwardingResult(RequestResult):
+
+    def __init__(self, resp):
+        super(GetEmailForwardingResult, self).__init__(resp)
+
+        self.email_forwarding = None
+
+
+class CreateEmailForwardingResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CreateEmailForwardingResult, self).__init__(resp)
+
+        self.email_forwarding = None
+
+
+class UpdateEmailForwardingResult(RequestResult):
+
+    def __init__(self, resp):
+        super(UpdateEmailForwardingResult, self).__init__(resp)
+
+        self.email_forwarding = None
+
+
+class DeleteEmailForwardingResult(RequestResult):
+    pass

@@ -1,4 +1,4 @@
-__all__ = ['DnsApi', 'DnssecApi', 'DomainApi']
+__all__ = ['DnsApi', 'DnssecApi', 'DomainApi', 'EmailForwardingApi']
 
 import requests
 
@@ -655,3 +655,127 @@ class DomainApi(_ApiBase):
         parse_search_stream(result, [json.loads(obj) for obj in resp.content.strip().split('\n')])
 
         return result
+
+
+class EmailForwardingApi(_ApiBase):
+    """
+    The api class for name.com EmailForwarding.
+    More details about each parameter :class:`here <namecom.EmailForwarding>`.
+    Official namecom documentation : https://www.name.com/api-docs/EmailForwardings
+    """
+
+    def __init__(self, domainName, auth, use_test_env=False):
+        """
+        Parameters
+        ----------
+        domainName : string
+            domain that dns records belongs to
+
+        auth : :class:`~namecom.Auth`
+            http authentication to use
+
+        use_test_env : bool
+            whether runs in test environment
+        """
+        super(EmailForwardingApi, self).__init__(auth, use_test_env)
+        self.endpoint = '/v4/domains/{domain_name}/email/forwarding'.format(domain_name=domainName)
+
+    def list_email_forwardings(self, perPage=1000, page=1):
+        """Returns a pagenated list of email forwarding entries for a domain.
+
+        Parameters
+        ----------
+        perPage : int
+            the number of records to return per request
+
+        page : int
+            which page to return
+
+        Returns
+        -------
+        :class:`~namecom.ListEmailForwardingsResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET')
+        return self._parse_result(resp, parse_list_email_forwardings, ListEmailForwardingsResult)
+
+    def get_mail_forwarding(self, emailBox):
+        """Returns an email forwarding entry
+
+        Parameters
+        ----------
+        emailBox : string
+            which email box to retrieve
+
+        Returns
+        -------
+        :class:`~namecom.GetEmailForwardingResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET', relative_path='/{emailBox}'.format(emailBox=emailBox))
+        return self._parse_result(resp, parse_get_email_forwarding, GetEmailForwardingResult)
+
+    def create_email_forwarding(self, emailBox, emailTo):
+        """Creates an email forwarding entry.
+
+        If this is the first email forwarding entry, it may modify the MX records for the domain accordingly.
+
+        Parameters
+        ----------
+        emailBox : string
+            the user portion of the email address to forward
+
+        emailTo : string
+            the entire email address to forward email to
+
+        Returns
+        -------
+        :class:`~namecom.GetEmailForwardingResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'emailBox': emailBox,
+            'emailTo': emailTo
+        })
+
+        resp = self._do('POST', data=data)
+        return self._parse_result(resp, parse_create_email_forwarding, CreateEmailForwardingResult)
+
+    def update_email_forwarding(self, emailBox, emailTo):
+        """Updates which email address the email is being forwarded to.
+
+        Parameters
+        ----------
+        emailBox : string
+            the user portion of the email address to forward
+
+        emailTo : string
+            the entire email address to forward email to
+
+        Returns
+        -------
+        :class:`~namecom.GetEmailForwardingResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'emailTo': emailTo
+        })
+
+        resp = self._do('PUT', relative_path='/{emailBox}'.format(emailBox=emailBox), data=data)
+        return self._parse_result(resp, parse_update_email_forwarding, UpdateEmailForwardingResult)
+
+    def delete_email_forwarding(self, emailBox):
+        """Deletes the email forwarding entry.
+
+        Parameters
+        ----------
+        emailBox : string
+            the user portion of the email address to forward
+
+        Returns
+        -------
+        :class:`~namecom.DeleteEmailForwardingResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('DELETE', relative_path='/{emailBox}'.format(emailBox=emailBox))
+        return self._parse_result(resp, parse_delete_email_forwarding, DeleteEmailForwardingResult)
