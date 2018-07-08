@@ -9,11 +9,13 @@ class DataModel(object):
     """
     @classmethod
     def from_dict(cls, dct):
+        """Create DataModel object from dict."""
         if not dct:
             return None
         return cls(**dct)
 
     def to_dict(self):
+        """Returns a dict representation of DataModel object."""
         return {
             k: v.to_dict() if isinstance(v, DataModel) else v
             for k, v in self.__dict__.items()
@@ -40,38 +42,39 @@ class Record(DataModel):
     """
     This is a class for an individual DNS resource record.
 
-    Attributes:
-        id (int):
-            Unique record id. Value is ignored on Create, and must match the URI on Update.
+    Attributes
+    ----------
+    id : int
+        Unique record id. Value is ignored on Create, and must match the URI on Update.
 
-        domainName (string):
-            DomainName is the zone that the record belongs to.
+    domainName : string
+        DomainName is the zone that the record belongs to.
 
-        host (string):
-            Host is the hostname relative to the zone: e.g. for a record for blog.example.org,
-            domain would be "example.org" and host would be "blog".
-            An apex record would be specified by either an empty host "" or "@".
-            A SRV record would be specified by "_{service}._{protocal}.{host}":
-            e.g. "_sip._tcp.phone" for _sip._tcp.phone.example.org.
+    host : string
+        Host is the hostname relative to the zone: e.g. for a record for blog.example.org,
+        domain would be "example.org" and host would be "blog".
+        An apex record would be specified by either an empty host "" or "@".
+        A SRV record would be specified by "_{service}._{protocal}.{host}":
+        e.g. "_sip._tcp.phone" for _sip._tcp.phone.example.org.
 
-        fqdn (string):
-            FQDN is the Fully Qualified Domain Name. It is the combination of the host and the domain name.
-            It always ends in a ".". FQDN is ignored in CreateRecord, specify via the Host field instead.
+    fqdn : string
+        FQDN is the Fully Qualified Domain Name. It is the combination of the host and the domain name.
+        It always ends in a ".". FQDN is ignored in CreateRecord, specify via the Host field instead.
 
-        type (string):
-            Type is one of the following: A, AAAA, ANAME, CNAME, MX, NS, SRV, or TXT.
+    type : string
+        Type is one of the following: A, AAAA, ANAME, CNAME, MX, NS, SRV, or TXT.
 
-        answer (string):
-            Answer is either the IP address for A or AAAA records; the target for ANAME, CNAME, MX, or NS records;
-            the text for TXT records. For SRV records, answer has the following format:
-            "{weight} {port} {target}" e.g. "1 5061 sip.example.org".
+    answer : string
+        Answer is either the IP address for A or AAAA records; the target for ANAME, CNAME, MX, or NS records;
+        the text for TXT records. For SRV records, answer has the following format:
+        "{weight} {port} {target}" e.g. "1 5061 sip.example.org".
 
-        ttl (int):
-            TTL is the time this record can be cached for in seconds. Name.com allows a minimum TTL of 300,
-            or 5 minutes.
+    ttl : int
+        TTL is the time this record can be cached for in seconds. Name.com allows a minimum TTL of 300,
+        or 5 minutes.
 
-        priority (int):
-            Priority is only required for MX and SRV records, it is ignored for all others.
+    priority : int
+        Priority is only required for MX and SRV records, it is ignored for all others.
     """
 
     def __init__(self, id, domainName, host, fqdn, type, answer, ttl=300, priority=None):
@@ -93,24 +96,25 @@ class DNSSEC(DataModel):
     This is a class for Domain Name System Security Extensions (DNSSEC).
     It contains all the data required to create a DS record at the registry.
 
-    Attributes:
-        domainName (string):
-            DomainName is the domain name.
+    Attributes
+    ----------
+    domainName : string
+        DomainName is the domain name.
 
-        keyTag (int):
-            KeyTag contains the key tag value of the DNSKEY RR that validates this signature.
-            The algorithm to generate it is here: https://tools.ietf.org/html/rfc4034#appendix-B
+    keyTag : int
+        KeyTag contains the key tag value of the DNSKEY RR that validates this signature.
+        The algorithm to generate it is here: https://tools.ietf.org/html/rfc4034#appendix-B
 
-        algorithm (int):
-            Algorithm is an integer identifying the algorithm used for signing. Valid values can be found here:
-            https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
+    algorithm : int
+        Algorithm is an integer identifying the algorithm used for signing. Valid values can be found here:
+        https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
 
-        digestType (int):
-            DigestType is an integer identifying the algorithm used to create the digest. Valid values can be found
-            here: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml
+    digestType : int
+        DigestType is an integer identifying the algorithm used to create the digest. Valid values can be found
+        here: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml
 
-        digest (string):
-            Digest is a digest of the DNSKEY RR that is registered with the registry.
+    digest : string
+        Digest is a digest of the DNSKEY RR that is registered with the registry.
     """
 
     def __init__(self, domainName, keyTag, algorithm, digestType, digest):
@@ -228,45 +232,46 @@ class Contact(DataModel):
     """
     This class contains all the contact data.
 
-    Attributes:
-        firstName (string):
-            First name of the contact.
+    Attributes
+    ----------
+    firstName : string
+        First name of the contact.
 
-        lastName (string):
-            Last name of the contact.
+    lastName : string
+        Last name of the contact.
 
-        companyName (string):
-            Company name of the contact. Leave blank if the contact is an individual as some registries will assume
-            it is a corporate entity otherwise.
+    companyName : string
+        Company name of the contact. Leave blank if the contact is an individual as some registries will assume
+        it is a corporate entity otherwise.
 
-        address1 (string):
-            Address1 is the first line of the contact's address.
+    address1 : string
+        Address1 is the first line of the contact's address.
 
-        address2 (string):
-            Address2 is the second line of the contact's address.
+    address2 : string
+        Address2 is the second line of the contact's address.
 
-        city (string):
-            City of the contact's address.
+    city : string
+        City of the contact's address.
 
-        state (string):
-            State or Province for the contact's address.
+    state : string
+        State or Province for the contact's address.
 
-        zip (string):
-            Zip or Postal Code for the contact's address.
+    zip : string
+        Zip or Postal Code for the contact's address.
 
-        country (string):
-            Country code for the contact's address. Required to be a ISO 3166-1 alpha-2 code.
+    country : string
+        Country code for the contact's address. Required to be a ISO 3166-1 alpha-2 code.
 
-        phone (string):
-            Phone number of the contact. Should be specified in the following format: "+cc.llllllll" where cc
-            is the country code and llllllll is the local number.
+    phone : string
+        Phone number of the contact. Should be specified in the following format: "+cc.llllllll" where cc
+        is the country code and llllllll is the local number.
 
-        fax (string):
-            Fax number of the contact. Should be specified in the following format: "+cc.llllllll" where cc
-            is the country code and llllllll is the local number.
+    fax : string
+        Fax number of the contact. Should be specified in the following format: "+cc.llllllll" where cc
+        is the country code and llllllll is the local number.
 
-        email (string):
-            Email of the contact. Should be a complete and valid email address.
+    email : string
+        Email of the contact. Should be a complete and valid email address.
     """
 
     def __init__(self, firstName, lastName, companyName=None, address1=None, address2=None, city=None,
@@ -289,32 +294,33 @@ class DomainSearchResult(DataModel):
     """
     SearchResult is returned by the CheckAvailability, Search, and SearchStream functions.
 
-    Attributes:
-        domainName (string):
-            DomainName is the punycode encoded value of the domain name.
+    Attributes
+    ----------
+    domainName : string
+        DomainName is the punycode encoded value of the domain name.
 
-        sld (string):
-            SLD is first portion of the domain_name.
+    sld : string
+        SLD is first portion of the domain_name.
 
-        tld (string):
-            TLD is the rest of the domain_name after the SLD.
+    tld : string
+        TLD is the rest of the domain_name after the SLD.
 
-        purchasable (bool):
-            Purchaseable indicates whether the search result is available for purchase.
+    purchasable : bool
+        Purchaseable indicates whether the search result is available for purchase.
 
-        premium (bool):
-            Premium indicates that this search result is a premium result and the purchase_price needs to be passed to
-            the DomainCreate command.
+    premium : bool
+        Premium indicates that this search result is a premium result and the purchase_price needs to be passed to
+        the DomainCreate command.
 
-        purchasePrice (float):
-            PurchasePrice is the price for purchasing this domain for 1 year. Purchase_price is always in USD.
+    purchasePrice : float
+        PurchasePrice is the price for purchasing this domain for 1 year. Purchase_price is always in USD.
 
-        purchaseType (string):
-            PurchaseType indicates what kind of purchase this result is for. It should be passed to the DomainCreate
-            command.
+    purchaseType : string
+        PurchaseType indicates what kind of purchase this result is for. It should be passed to the DomainCreate
+        command.
 
-        renewalPrice (float):
-            RenewalPrice is the annual renewal price for this domain as it may be different then the purchase_price.
+    renewalPrice : float
+        RenewalPrice is the annual renewal price for this domain as it may be different then the purchase_price.
     """
 
     def __init__(self, domainName, sld, tld, purchasable=None,
