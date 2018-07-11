@@ -354,3 +354,26 @@ class EmailForwarding(DataModel):
         self.domainName = domainName
         self.emailBox = emailBox
         self.emailTo = emailTo
+
+
+class Transfer(DataModel):
+    """
+    Transfer contains the information related to a transfer of a domain name to Name.com.
+
+    Attributes
+    ----------
+    domainName : string
+        DomainName is the domain to be transfered to Name.com.
+
+    email : string
+        Email is the email address that the approval email was sent to. Not every TLD requries an approval email.
+        This is usaully pulled from Whois.
+
+    status : string
+        Status is the current status of the transfer. Details about statuses can be found in the following
+        Knowledge Base article: https://www.name.com/support/articles/115012519688-Transfer-status-FAQ.
+    """
+    def __init__(self, domainName, email, status):
+        self.domainName = domainName
+        self.email = email
+        self.status = status

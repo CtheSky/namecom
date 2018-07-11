@@ -238,3 +238,37 @@ class UpdateEmailForwardingResult(RequestResult):
 
 class DeleteEmailForwardingResult(RequestResult):
     pass
+
+
+class ListTransfersResult(RequestResult):
+
+    def __init__(self, resp):
+        super(ListTransfersResult, self).__init__(resp)
+
+        self.transfers = []
+
+
+class GetTransferResult(RequestResult):
+
+    def __init__(self, resp):
+        super(GetTransferResult, self).__init__(resp)
+
+        self.transfer = None
+
+
+class CreateTransferResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CreateTransferResult, self).__init__(resp)
+
+        self.transfer = None
+        self.order = None
+        self.totalPaid = None
+
+
+class CancelTransferResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CancelTransferResult, self).__init__(resp)
+
+        self.transfer = None
