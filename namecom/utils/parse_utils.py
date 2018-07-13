@@ -127,3 +127,23 @@ def parse_update_email_forwarding(result, dct):
 
 def parse_delete_email_forwarding(result, dct):
     pass
+
+
+def parse_list_transfers(result, dct):
+    result.transfers = [Transfer.from_dict(obj) for obj in dct.get('transfers', [])]
+    result.nextPage = dct.get('nextPage')
+    result.lastPage = dct.get('lastPage')
+
+
+def parse_get_transfer(result, dct):
+    result.transfer = Transfer.from_dict(dct)
+
+
+def parse_create_transfer(result, dct):
+    result.transfer = Transfer.from_dict(dct.get('transfer'))
+    result.order = dct.get('order')
+    result.totalPaid = dct.get('totalPaid')
+
+
+def parse_cancel_tranfer(result, dct):
+    result.transfer = Transfer.from_dict(dct)

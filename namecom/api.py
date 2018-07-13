@@ -779,3 +779,105 @@ class EmailForwardingApi(_ApiBase):
         """
         resp = self._do('DELETE', relative_path='/{emailBox}'.format(emailBox=emailBox))
         return self._parse_result(resp, parse_delete_email_forwarding, DeleteEmailForwardingResult)
+
+
+class TransferApi(_ApiBase):
+    """
+    The api class for Domain Transfer.
+    More details about each parameter :class:`here <namecom.Transfer>`.
+    Official namecom documentation : https://www.name.com/api-docs/Transfers
+    """
+
+    def __init__(self, auth, use_test_env=False):
+        """
+        Parameters
+        ----------
+        auth : :class:`~namecom.Auth`
+            http authentication to use
+
+        use_test_env : bool
+            whether runs in test environment
+        """
+        super(TransferApi, self).__init__(auth, use_test_env)
+        self.endpoint = '/v4/transfers'
+
+    def list_transfers(self):
+        """Lists all pending transfer in requests.
+
+        To get the information related to a non-pending transfer, you can use the GetTransfer function for that.
+
+        Returns
+        -------
+        :class:`~namecom.ListTransferResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET')
+        return self._parse_result(resp, parse_list_transfers, ListTransfersResult)
+
+    def get_transfer(self, domainName):
+        """Gets details for a transfer request.
+
+        Parameters
+        ----------
+        domainName : str
+            DomainName is the domain you want to get the transfer information for
+
+        Returns
+        -------
+        :class:`~namecom.GetTransferResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET', relative_path='/{domainName}'.format(domainName=domainName))
+        return self._parse_result(resp, parse_get_transfer, GetTransferResult)
+
+    def create_transfer(self, domainName, authCode, purchasePrice, privacyEnabled=False, promoCode=None):
+        """Purchases a new domain transfer request.
+
+        Parameters
+        ----------
+        domainName : str
+            DomainName is the domain you want to transfer to Name.com
+
+        authCode : str
+            AuthCode is the authorization code for the transfer
+
+        purchasePrice : float
+            the amount to pay for the transfer of the domain
+
+        privacyEnabled : bool
+            a flag on whether to purchase Whois Privacy with the transfer
+
+        promoCode : str
+            PromoCode is not implemented yet
+
+        Returns
+        -------
+        :class:`~namecom.CreateTransferResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'domainName': domainName,
+            'authCode': authCode,
+            'purchasePrice': purchasePrice,
+            'privacyEnabled': privacyEnabled,
+            'promoCode': promoCode
+        })
+
+        resp = self._do('POST', data=data)
+        return self._parse_result(resp, parse_create_transfer, CreateTransferResult)
+
+    def cancel_transfer(self, domainName):
+        """Cancels a pending transfer request and refunds the amount to account credit.
+
+        Parameters
+        ----------
+        domainName : str
+            DomainName is the domain to be transfered to Name.com
+
+        Returns
+        -------
+        :class:`~namecom.CancelTransferResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('POST', relative_path='/{domainName}:cancel'.format(domainName=domainName))
+        return self._parse_result(resp, parse_cancel_tranfer, CancelTransferResult)
