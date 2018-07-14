@@ -22,6 +22,10 @@ class NamecomError(Exception):
         self.message = message
         self.details = details
 
+    def __str__(self):
+        return 'Namecom Error: status code [%s], message [%s], details [%s]' % \
+               (self.status_code, self.message, self.details)
+
 
 _error2exception = {}  # map (status_code, message) tuple to Exception class
 
@@ -57,3 +61,9 @@ def add_to_mapping(cls):
 class PermissionDenied(NamecomError):
     status_code = 403
     message = 'Permission Denied'
+
+
+@add_to_mapping
+class InvalidArgument(NamecomError):
+    status_code = 400
+    message = 'Invalid Argument'
