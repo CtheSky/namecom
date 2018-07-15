@@ -377,3 +377,44 @@ class Transfer(DataModel):
         self.domainName = domainName
         self.email = email
         self.status = status
+
+
+class URLForwarding(DataModel):
+    """
+    URLForwarding is the model for URL forwarding entries.
+
+    Attributes
+    ----------
+    domainName : string
+        DomainName is the domain part of the hostname to forward.
+
+    host : string
+        Host is the entirety of the hostname. i.e. www.example.org
+
+    forwardsTo : string
+        ForwardsTo is the URL this host will be forwarded to.
+
+    type : string
+        Type is the type of forwarding. Valid types are:
+        Masked - This retains the original domain in the address bar and will not reveal or display the actual
+        destination URL. If you are forwarding knowledgebase.ninja to Name.com, the address bar will say
+        knowledgebase.ninja. This is sometimes called iframe forwarding. And: Redirect - This does not retain
+        the original domain in the address bar, so the user will see it change and realize they were forwarded
+        from the URL they originally entered. If you are forwarding knowledgebase.ninja to Name.com, the address
+        bar will say Name.com. This is also called 301 forwarding.
+
+    title : string
+        Title is the title for the html page to use if the type is masked. Values are ignored for types other
+        then "masked".
+
+    meta : string
+        Meta is the meta tags to add to the html page if the type is masked.
+        ex: "meta name='keywords' content='fish, denver, platte'". Values are ignored for types other then "masked".
+    """
+    def __init__(self, domainName, host, forwardsTo, type, title=None, meta=None):
+        self.domainName = domainName
+        self.host = host
+        self.forwardsTo = forwardsTo
+        self.type = type
+        self.title = title
+        self.meta = meta

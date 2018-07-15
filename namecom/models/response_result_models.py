@@ -272,3 +272,39 @@ class CancelTransferResult(RequestResult):
         super(CancelTransferResult, self).__init__(resp)
 
         self.transfer = None
+
+
+class ListURLForwardinsResult(RequestResult):
+
+    def __init__(self, resp):
+        super(ListURLForwardinsResult, self).__init__(resp)
+
+        self.url_forwardings = []
+
+
+class GetURLForwardingResult(RequestResult):
+
+    def __init__(self, resp):
+        super(GetURLForwardingResult, self).__init__(resp)
+
+        self.url_forwarding = None
+
+
+class CreateURLForwardingResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CreateURLForwardingResult, self).__init__(resp)
+
+        self.url_forwarding = None
+
+
+class UpdateURLForwardingResult(RequestResult):
+
+    def __init__(self, resp):
+        super(UpdateURLForwardingResult, self).__init__(resp)
+
+        self.url_forwarding = None
+
+
+class DeleteURLForwardingResult(RequestResult):
+    pass

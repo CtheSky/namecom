@@ -147,3 +147,25 @@ def parse_create_transfer(result, dct):
 
 def parse_cancel_tranfer(result, dct):
     result.transfer = Transfer.from_dict(dct)
+
+
+def parse_list_url_forwardings(result, dct):
+    result.url_forwardings = [URLForwarding.from_dict(obj) for obj in dct.get('urlForwarding', [])]
+    result.nextPage = dct.get('nextPage')
+    result.lastPage = dct.get('lastPage')
+
+
+def parse_get_url_forwarding(result, dct):
+    result.url_forwarding = URLForwarding.from_dict(dct)
+
+
+def parse_create_url_forwarding(result, dct):
+    result.url_forwarding = URLForwarding.from_dict(dct)
+
+
+def parse_update_url_forwarding(result, dct):
+    result.url_forwarding = URLForwarding.from_dict(dct)
+
+
+def parse_delete_url_forwarding(result, dct):
+    pass

@@ -1,4 +1,4 @@
-__all__ = ['DnsApi', 'DnssecApi', 'DomainApi', 'EmailForwardingApi']
+__all__ = ['DnsApi', 'DnssecApi', 'DomainApi', 'EmailForwardingApi', 'TransferApi', 'URLForwardingApi']
 
 import requests
 
@@ -881,3 +881,150 @@ class TransferApi(_ApiBase):
         """
         resp = self._do('POST', relative_path='/{domainName}:cancel'.format(domainName=domainName))
         return self._parse_result(resp, parse_cancel_tranfer, CancelTransferResult)
+
+
+class URLForwardingApi(_ApiBase):
+
+    def __init__(self, domainName, auth, use_test_env=False):
+        """
+        Parameters
+        ----------
+        domainName : str
+
+        auth : :class:`~namecom.Auth`
+            http authentication to use
+
+        use_test_env : bool
+            whether runs in test environment
+        """
+        super(URLForwardingApi, self).__init__(auth, use_test_env)
+        self.endpoint = '/v4/domains/{domainName}/url/forwarding'.format(domainName=domainName)
+
+    def list_url_forwardings(self, page=1, perPage=1000):
+        """Returns a pagenated list of URL forwarding entries for a domain.
+
+        Parameters
+        ----------
+        page: int
+            which page to return
+
+        perPage : int
+            the number of records to return per request
+
+        Returns
+        -------
+        :class:`~namecom.ListURLForwardinsResult`
+            a response result instance with parsed response info
+        """
+        params = {
+            'page': page,
+            'perPage': perPage
+        }
+
+        resp = self._do('GET', params=params)
+        return self._parse_result(resp, parse_list_url_forwardings, ListURLForwardinsResult)
+
+    def get_url_forwarding(self, host):
+        """Returns an URL forwarding entry.
+
+        Parameters
+        ----------
+        host : str
+            the part of the domain name before the domain
+
+        Returns
+        -------
+        :class:`~namecom.GetURLForwardingResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET', relative_path='/{host}'.format(host=host))
+        return self._parse_result(resp, parse_get_url_forwarding, GetURLForwardingResult)
+
+    def create_url_forwarding(self, host, forwardsTo, type=None, title=None, meta=None):
+        """Creates an URL forwarding entry.
+
+        If this is the first URL forwarding entry, it may modify the A records for the domain accordingly.
+
+        Parameters
+        ----------
+        host : str
+            the entirety of the hostname. i.e. www.example.org
+
+        forwardsTo : str
+            the URL this host will be forwarded to
+
+        type : str
+            the type of forwarding
+
+        title : str
+            the title for the html page to use if the type is masked
+
+        meta : str
+            the meta tags to add to the html page if the type is masked
+
+        Returns
+        -------
+        :class:`~namecom.CreateURLForwardingResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'host': host,
+            'forwardsTo': forwardsTo,
+            'type': type,
+            'title': title,
+            'meta': meta
+        })
+
+        resp = self._do('POST', data=data)
+        return self._parse_result(resp, parse_create_url_forwarding, CreateURLForwardingResult)
+
+    def update_url_forwarding(self, host, forwardsTo, type=None, title=None, meta=None):
+        """Updates which URL the host is being forwarded to.
+
+        Parameters
+        ----------
+        host : str
+            the entirety of the hostname. i.e. www.example.org
+
+        forwardsTo : str
+            the URL this host will be forwarded to
+
+        type : str
+            the type of forwarding
+
+        title : str
+            the title for the html page to use if the type is masked
+
+        meta : str
+            the meta tags to add to the html page if the type is masked
+
+        Returns
+        -------
+        :class:`~namecom.UpdateURLForwardingResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'forwardsTo': forwardsTo,
+            'type': type,
+            'title': title,
+            'meta': meta
+        })
+
+        resp = self._do('PUT', relative_path='/{host}'.format(host=host), data=data)
+        return self._parse_result(resp, parse_update_url_forwarding, UpdateURLForwardingResult)
+
+    def delete_url_forwarding(self, host):
+        """Deletes the URL forwarding entry.
+
+        Parameters
+        ----------
+        host : str
+            the entirety of the hostname. i.e. www.example.org
+
+        Returns
+        -------
+        :class:`~namecom.DeleteURLForwardingResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('DELETE', relative_path='/{host}'.format(host=host))
+        return self._parse_result(resp, parse_delete_url_forwarding, DeleteURLForwardingResult)

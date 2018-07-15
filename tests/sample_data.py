@@ -1,4 +1,4 @@
-from namecom import Domain, Contact, Contacts, Record, DNSSEC, EmailForwarding , Auth
+from namecom import Domain, Contact, Contacts, Record, DNSSEC, EmailForwarding, URLForwarding, Auth
 
 correct_auth = Auth('cthesky-test', '96414285232f77557662ba9be585ba926f04dc9b')
 wrong_auth = Auth('cthesky-test', 'wrong token')
@@ -22,12 +22,12 @@ record_sample1 = Record(id=357756, domainName='cthesky.band', host='test',
                         fqdn='test.cthesky.band.', type='A',
                         answer='10.0.0.1', ttl=300)
 
-dnssec_sample1 = DNSSEC(domainName='cthesky.band', keyTag=30909, algorithm=8, digestType=2,
-                        digest='E2D3C916F6DEEAC73294E8268FB5885044A833FC5459588F4A9184CFC41A5766')
-
-dnssec_sample2 = DNSSEC(domainName='cthesky.band', keyTag=33630, algorithm=5, digestType=2,
-                        digest='4177EAEC09A37178357871EBE3FB361CABB2861F12A1D51DDE18CBA2439BB5C1')
+dnssec_sample1 = DNSSEC(domainName='cthesky.band', keyTag=30909, algorithm=8, digestType=2, digest='E2D3C916F6DEEAC73294E8268FB5885044A833FC5459588F4A9184CFC41A5766')
+dnssec_sample2 = DNSSEC(domainName='cthesky.band', keyTag=33630, algorithm=5, digestType=2, digest='4177EAEC09A37178357871EBE3FB361CABB2861F12A1D51DDE18CBA2439BB5C1')
 
 email_forwarding_sample1 = EmailForwarding(domainName='cthesky.band', emailBox='test1', emailTo='cthesky@yeah.net')
 email_forwarding_sample2 = EmailForwarding(domainName='cthesky.band', emailBox='test2', emailTo='cthesky@yeah.net')
 email_forwarding_sample3 = EmailForwarding(domainName='cthesky.band', emailBox='test2', emailTo='cthesky@gmail.com')
+
+url_forwarding_sample1 = URLForwarding(domainName='cthesky.band', host='testurl.cthesky.band', forwardsTo='https://www.example.net', type='redirect')
+url_forwarding_sample2 = URLForwarding(domainName='cthesky.band', host='testurl.cthesky.band', forwardsTo='https://www.example.com', type='redirect')
