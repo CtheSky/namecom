@@ -418,3 +418,24 @@ class URLForwarding(DataModel):
         self.type = type
         self.title = title
         self.meta = meta
+
+
+class VanityNameserver(DataModel):
+    """
+    VanityNameserver contains the hostname as well as the list of IP addresses for nameservers.
+
+    Attributes
+    ----------
+    domainName : string
+        DomainName is the domain the nameserver is a subdomain of.
+
+    hostname : string
+        Hostname is the hostname of the nameserver.
+
+    ips : []string
+        IPs is a list of IP addresses that are used for glue records for this nameserver.
+    """
+    def __init__(self, domainName, hostname, ips):
+        self.domainName = domainName
+        self.hostname = hostname
+        self.ips = ips
