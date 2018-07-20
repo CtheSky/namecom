@@ -308,3 +308,41 @@ class UpdateURLForwardingResult(RequestResult):
 
 class DeleteURLForwardingResult(RequestResult):
     pass
+
+
+class ListVanityNameserversResult(RequestResult):
+
+    def __init__(self, resp):
+        super(ListVanityNameserversResult, self).__init__(resp)
+
+        self.vanityNameservers = []
+        self.nextPage = None
+        self.lastPage = None
+
+
+class GetVanityNameserver(RequestResult):
+
+    def __init__(self, resp):
+        super(GetVanityNameserver, self).__init__(resp)
+
+        self.vanityNameserver = None
+
+
+class CreateVanityNameserverResult(RequestResult):
+
+    def __init__(self, resp):
+        super(CreateVanityNameserverResult, self).__init__(resp)
+
+        self.vanityNameserver = None
+
+
+class UpdateVanityNameserverResult(RequestResult):
+
+    def __init__(self, resp):
+        super(UpdateVanityNameserverResult, self).__init__(resp)
+
+        self.vanityNameserver = None
+
+
+class DeleteVanityNameserverResult(RequestResult):
+    pass
