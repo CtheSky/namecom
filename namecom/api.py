@@ -1,4 +1,5 @@
-__all__ = ['DnsApi', 'DnssecApi', 'DomainApi', 'EmailForwardingApi', 'TransferApi', 'URLForwardingApi']
+__all__ = ['DnsApi', 'DnssecApi', 'DomainApi', 'EmailForwardingApi', 'TransferApi', 'URLForwardingApi',
+           'VanityNameserverApi']
 
 import requests
 
@@ -890,6 +891,7 @@ class URLForwardingApi(_ApiBase):
         Parameters
         ----------
         domainName : str
+            domain name to manipulate url forwarding for
 
         auth : :class:`~namecom.Auth`
             http authentication to use
@@ -1028,3 +1030,117 @@ class URLForwardingApi(_ApiBase):
         """
         resp = self._do('DELETE', relative_path='/{host}'.format(host=host))
         return self._parse_result(resp, parse_delete_url_forwarding, DeleteURLForwardingResult)
+
+
+class VanityNameserverApi(_ApiBase):
+
+    def __init__(self, domainName, auth, use_test_env=False):
+        """
+        Parameters
+        ----------
+        domainName : str
+            domain name to manipulate nameserver for
+
+        auth : :class:`~namecom.Auth`
+            http authentication to use
+
+        use_test_env : bool
+            whether runs in test environment
+        """
+        super(VanityNameserverApi, self).__init__(auth, use_test_env)
+        self.endpoint = '/v4/domains/{domainName}/vanity_nameservers'.format(domainName=domainName)
+
+    def list_vanity_nameservers(self):
+        """Lists all nameservers registered with the registry.
+
+        It omits the IP addresses from the response. Those can be found from calling GetVanityNameserver.
+
+        Returns
+        -------
+        :class:`~namecom.ListVanityNameserversResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET')
+        return self._parse_result(resp, parse_list_vanity_nameservers, ListVanityNameserversResult)
+
+    def get_vanity_nameserver(self, hostname):
+        """GetVanityNameserver gets the details for a vanity nameserver registered with the registry.
+
+        Parameters
+        ----------
+        hostname: str
+            the hostname of the nameserver
+
+        Returns
+        -------
+        :class:`~namecom.GetVanityNameserverResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('GET', relative_path='/{hostname}'.format(hostname=hostname))
+        return self._parse_result(resp, parse_get_vanity_nameserver, GetVanityNameserverResult)
+
+    def create_vanity_nameserver(self, hostname, ips):
+        """Registers a nameserver with the registry.
+
+        Parameters
+        ----------
+        hostname: str
+            the hostname of the nameserver
+
+        ips: []str
+            a list of IP addresses that are used for glue records for this nameserver
+
+        Returns
+        -------
+        :class:`~namecom.CreateVanityNameserverResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'hostname': hostname,
+            'ips': ips
+        })
+
+        resp = self._do('POST', data=data)
+        return self._parse_result(resp, parse_create_vanity_nameserver, CreateVanityNameserverResult)
+
+    def update_vanity_nameserver(self, hostname, ips):
+        """Update the glue record IP addresses at the registry.
+
+        Parameters
+        ----------
+        hostname: str
+            the domain to for the vanity nameserver
+
+        ips: []str
+            a list of IP addresses that are used for glue records for this nameserver
+
+        Returns
+        -------
+        :class:`~namecom.UpdateVanityNameserverResult`
+            a response result instance with parsed response info
+        """
+        data = json_dumps({
+            'ips': ips
+        })
+
+        resp = self._do('PUT', relative_path='/{hostname}'.format(hostname=hostname), data=data)
+        return self._parse_result(resp, parse_update_vanity_nameserver, UpdateVanityNameserverResult)
+
+    def delete_vanity_nameserver(self, hostname):
+        """Unregisteres the nameserver at the registry.
+
+        This might fail if the registry believes the nameserver is in use.
+
+        Parameters
+        ----------
+        hostname : str
+            the domain of the vanity nameserver to delete
+
+        Returns
+        -------
+        :class:`~namecom.DeleteVanityNameserverResult`
+            a response result instance with parsed response info
+        """
+        resp = self._do('DELETE', relative_path='/{hostname}'.format(hostname=hostname))
+        return self._parse_result(resp, parse_delete_vanity_nameserver, DeleteVanityNameserverResult)
+

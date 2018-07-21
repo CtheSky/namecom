@@ -1,4 +1,4 @@
-from namecom import Domain, Contact, Contacts, Record, DNSSEC, EmailForwarding, URLForwarding, Auth
+from namecom import Domain, Contact, Contacts, Record, DNSSEC, EmailForwarding, URLForwarding, VanityNameserver, Auth
 
 correct_auth = Auth('cthesky-test', '96414285232f77557662ba9be585ba926f04dc9b')
 wrong_auth = Auth('cthesky-test', 'wrong token')
@@ -31,3 +31,8 @@ email_forwarding_sample3 = EmailForwarding(domainName='cthesky.band', emailBox='
 
 url_forwarding_sample1 = URLForwarding(domainName='cthesky.band', host='testurl.cthesky.band', forwardsTo='https://www.example.net', type='redirect')
 url_forwarding_sample2 = URLForwarding(domainName='cthesky.band', host='testurl.cthesky.band', forwardsTo='https://www.example.com', type='redirect')
+
+vanity_nameserver_sample1 = VanityNameserver(domainName='cthesky.band', hostname='ns1.cthesky.band',
+                                             ips=["192.168.1.1", "fd01:4860:4860::8888"])
+vanity_nameserver_sample2 = VanityNameserver(domainName='cthesky.band', hostname='ns1.cthesky.band',
+                                             ips=["192.168.0.1", "fd01:4860:4860::8888"])

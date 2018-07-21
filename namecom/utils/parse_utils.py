@@ -169,3 +169,23 @@ def parse_update_url_forwarding(result, dct):
 
 def parse_delete_url_forwarding(result, dct):
     pass
+
+
+def parse_list_vanity_nameservers(result, dct):
+    result.vanityNameservers = [VanityNameserver.from_dict(obj) for obj in dct.get('vanityNameservers', [])]
+
+
+def parse_get_vanity_nameserver(result, dct):
+    result.vanityNameserver = VanityNameserver.from_dict(dct)
+
+
+def parse_create_vanity_nameserver(result, dct):
+    result.vanityNameserver = VanityNameserver.from_dict(dct)
+
+
+def parse_update_vanity_nameserver(result, dct):
+    result.vanityNameserver = VanityNameserver.from_dict(dct)
+
+
+def parse_delete_vanity_nameserver(reuslt, dct):
+    pass

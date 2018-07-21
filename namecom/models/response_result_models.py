@@ -320,10 +320,10 @@ class ListVanityNameserversResult(RequestResult):
         self.lastPage = None
 
 
-class GetVanityNameserver(RequestResult):
+class GetVanityNameserverResult(RequestResult):
 
     def __init__(self, resp):
-        super(GetVanityNameserver, self).__init__(resp)
+        super(GetVanityNameserverResult, self).__init__(resp)
 
         self.vanityNameserver = None
 
