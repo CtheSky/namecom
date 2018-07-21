@@ -77,7 +77,7 @@ class Record(DataModel):
         Priority is only required for MX and SRV records, it is ignored for all others.
     """
 
-    def __init__(self, id, domainName, host, fqdn, type, answer, ttl=300, priority=None):
+    def __init__(self, id, domainName, fqdn, type, answer, host=None, ttl=300, priority=None):
         self.id = id
         self.domainName = domainName
         self.host = host
@@ -435,7 +435,7 @@ class VanityNameserver(DataModel):
     ips : []string
         IPs is a list of IP addresses that are used for glue records for this nameserver.
     """
-    def __init__(self, domainName, hostname, ips):
+    def __init__(self, domainName, hostname, ips=None):
         self.domainName = domainName
         self.hostname = hostname
         self.ips = ips
