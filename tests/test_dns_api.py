@@ -1,28 +1,27 @@
 import unittest
 
 from namecom import DnsApi
-from sample_data import (
+from sample import (
     correct_auth,
-    domain_sample1 as domain_sample,
-    record_sample1 as record_sample
+    record_sample1 as sample
 )
 
-api = DnsApi(domainName=domain_sample.domainName, auth=correct_auth, use_test_env=True)
+api = DnsApi(domainName=sample.domainName, auth=correct_auth, use_test_env=True)
 
 
 class DnsApiTestCase(unittest.TestCase):
 
     def test_get_record(self):
-        get_record_result = api.get_record(record_sample.id)
+        get_record_result = api.get_record(sample.id)
 
         record = get_record_result.record
-        self.assertDictEqual(record.__dict__, record_sample.__dict__)
+        self.assertDictEqual(record.__dict__, sample.__dict__)
 
     def test_list_records(self):
         list_records_result = api.list_records()
 
         records = list_records_result.records
-        self.assertIn(record_sample, records)
+        self.assertIn(sample, records)
 
     def test_create_update_delete_records(self):
         create_domain_result = api.create_record(host='dummy', type='A', answer='10.0.0.1')

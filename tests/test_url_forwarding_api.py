@@ -1,7 +1,7 @@
 import unittest
 
 from namecom import URLForwardingApi
-from sample_data import (
+from sample import (
     correct_auth,
     url_forwarding_sample1,
     url_forwarding_sample2
