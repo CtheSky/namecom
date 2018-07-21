@@ -67,3 +67,9 @@ class PermissionDenied(NamecomError):
 class InvalidArgument(NamecomError):
     status_code = 400
     message = 'Invalid Argument'
+
+
+@add_to_mapping
+class ServerError(NamecomError):
+    status_code = 500
+    message = 'Internal Error'
