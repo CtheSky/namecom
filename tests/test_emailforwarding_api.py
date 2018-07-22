@@ -1,7 +1,7 @@
 import unittest
 
 from namecom import EmailForwardingApi
-from sample import (
+from .sample import (
     correct_auth,
     dnssec_sample1,
     email_forwarding_sample1 as sample1,

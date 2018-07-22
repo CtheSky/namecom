@@ -1,7 +1,7 @@
 import unittest
 
 from namecom import DnssecApi
-from sample import (
+from .sample import (
     correct_auth,
     dnssec_sample1 as sample1,
     dnssec_sample2 as sample2

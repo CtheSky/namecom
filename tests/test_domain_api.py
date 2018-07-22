@@ -2,7 +2,7 @@ import os
 import unittest
 
 from namecom import DomainApi, Domain
-from sample import (
+from .sample import (
     correct_auth,
     domain_sample1 as sample1,
     domain_sample2 as sample2

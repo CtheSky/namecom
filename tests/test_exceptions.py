@@ -1,7 +1,7 @@
 import unittest
 
 from namecom import DnsApi, TransferApi, exceptions
-from sample import (
+from .sample import (
     correct_auth,
     wrong_auth,
     record_sample1 as sample1

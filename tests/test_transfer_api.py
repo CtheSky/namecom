@@ -1,7 +1,7 @@
 import unittest
 
 from namecom import TransferApi
-from sample import correct_auth
+from .sample import correct_auth
 
 api = TransferApi(auth=correct_auth, use_test_env=True)
 

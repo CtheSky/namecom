@@ -1,7 +1,7 @@
 import unittest
 
 from namecom import VanityNameserverApi
-from sample import (
+from .sample import (
     correct_auth,
     vanity_nameserver_sample1 as sample1,
     vanity_nameserver_sample2 as sample2
