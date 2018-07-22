@@ -1,11 +1,23 @@
-from .api import *
-from .auth import *
-from .models import *
 from . import exceptions
-
-__all__ = (
-        api.__all__ +
-        auth.__all__ +
-        models.__data_models__ +
-        ['exceptions']
+from .auth import Auth
+from .models import (
+    Contact,
+    Contacts,
+    DNSSEC,
+    Domain,
+    DomainSearchResult,
+    EmailForwarding,
+    Record,
+    Transfer,
+    URLForwarding,
+    VanityNameserver
+)
+from .api import (
+    DnsApi,
+    DnssecApi,
+    DomainApi,
+    EmailForwardingApi,
+    TransferApi,
+    URLForwardingApi,
+    VanityNameserverApi,
 )
