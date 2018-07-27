@@ -1,3 +1,12 @@
+"""
+namecom: utils/parse_utils.py
+
+Implements functions to parse api response result.
+
+Tianhong Chu [https://github.com/CtheSky]
+License: MIT
+"""
+
 from ..models import *
 
 

@@ -1,3 +1,13 @@
+"""
+namecom: auth.py
+
+Contains Auth class which stores username & token
+for api class to access the name.com service.
+
+Tianhong Chu [https://github.com/CtheSky]
+License: MIT
+"""
+
 __all__ = ['Auth']
 
 

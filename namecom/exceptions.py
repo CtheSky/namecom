@@ -1,22 +1,33 @@
+"""
+namecom: exceptions.py
+
+Defines exception classes
+
+Tianhong Chu [https://github.com/CtheSky]
+License: MIT
+"""
+
+
 class NamecomError(Exception):
-    """
-    Base Exception class for namecom api.
-
-    Attributes:
-         status_code (int):
-             http response status code
-
-         headers (MutableMapping):
-             http response headers from requests.Response
-
-         message (string):
-             a general error message
-
-         details (string):
-             an optional "details" key which contains a string with additional information about the error.
-    """
+    """Base Exception class for namecom api."""
 
     def __init__(self, status_code, headers, message, details):
+        """
+
+        Parameters
+        ----------
+        status_code : int
+            http response status code
+
+        headers : MutableMapping
+            http response headers from requests.Response
+
+        message : str
+            a general error message
+
+        details : str
+            an optional "details" key which contains a string with additional information about the error
+        """
         self.status_code = status_code
         self.headers = headers
         self.message = message

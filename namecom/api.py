@@ -1,3 +1,12 @@
+"""
+namecom: api.py
+
+Implements several api classes for the name.com v4 api.
+
+Tianhong Chu [https://github.com/CtheSky]
+License: MIT
+"""
+
 __all__ = ['DnsApi', 'DnssecApi', 'DomainApi', 'EmailForwardingApi', 'TransferApi', 'URLForwardingApi',
            'VanityNameserverApi']
 

@@ -1,3 +1,13 @@
+"""
+namecom: models.__init__.py
+
+Defines response result models for the api.
+
+Tianhong Chu [https://github.com/CtheSky]
+License: MIT
+"""
+
+
 class RequestResult(object):
     def __init__(self, resp):
         self.resp = resp

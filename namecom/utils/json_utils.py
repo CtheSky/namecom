@@ -1,3 +1,12 @@
+"""
+namecom: utils/json_utils.py
+
+Provides custom json encoder for data models.
+
+Tianhong Chu [https://github.com/CtheSky]
+License: MIT
+"""
+
 import json
 import functools
 from ..models import DataModel

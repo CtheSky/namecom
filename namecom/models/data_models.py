@@ -1,3 +1,13 @@
+"""
+namecom: models.__init__.py
+
+Defines data models for the api.
+
+Tianhong Chu [https://github.com/CtheSky]
+License: MIT
+"""
+
+
 class DataModel(object):
     """
     This is base class for data models.
