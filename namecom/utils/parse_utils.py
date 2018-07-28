@@ -12,6 +12,8 @@ from ..models import *
 
 def parse_list_records(result, dct):
     result.records = [Record.from_dict(obj) for obj in dct.get('records', [])]
+    result.nextPage = dct.get('nextPage')
+    result.lastPage = dct.get('lastPage')
 
 
 def parse_get_record(result, dct):
@@ -182,6 +184,8 @@ def parse_delete_url_forwarding(result, dct):
 
 def parse_list_vanity_nameservers(result, dct):
     result.vanityNameservers = [VanityNameserver.from_dict(obj) for obj in dct.get('vanityNameservers', [])]
+    result.nextPage = dct.get('nextPage')
+    result.lastPage = dct.get('lastPage')
 
 
 def parse_get_vanity_nameserver(result, dct):

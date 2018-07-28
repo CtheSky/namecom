@@ -91,15 +91,28 @@ class DnsApi(_ApiBase):
         super(DnsApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains/{domain_name}/records'.format(domain_name=domainName)
 
-    def list_records(self):
+    def list_records(self, page=1, perPage=1000):
         """Returns all records for a zone.
+
+        Parameters
+        ----------
+        page: int
+            which page to return
+
+        perPage : int
+            the number of records to return per request
 
         Returns
         -------
         :class:`~namecom.ListRecordsResult`
             a response result instance with parsed response info
         """
-        resp = self._do('GET')
+        params = {
+            'page': page,
+            'perPage': perPage
+        }
+
+        resp = self._do('GET', params=params)
         return self._parse_result(resp, parse_list_records, ListRecordsResult)
 
     def get_record(self, id):
@@ -224,15 +237,28 @@ class DnssecApi(_ApiBase):
         super(DnssecApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains/{domainName}/dnssec'.format(domainName=domainName)
 
-    def list_dnssecs(self):
+    def list_dnssecs(self, page=1, perPage=1000):
         """Lists all of the DNSSEC keys registered with the registry.
+
+        Parameters
+        ----------
+        page: int
+            which page to return
+
+        perPage : int
+            the number of records to return per request
 
         Returns
         -------
         :class:`~namecom.ListDnssecsResult`
             a response result instance with parsed response info
         """
-        resp = self._do('GET')
+        params = {
+            'page': page,
+            'perPage': perPage
+        }
+
+        resp = self._do('GET', params=params)
         return self._parse_result(resp, parse_list_dnssecs, ListDnssecsResult)
 
     def get_dnssec(self, digest):
@@ -320,15 +346,28 @@ class DomainApi(_ApiBase):
         super(DomainApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains'
 
-    def list_domains(self):
+    def list_domains(self, page=1, perPage=1000):
         """Returns all domains in the account. It omits some information that can be retrieved from GetDomain.
+
+        Parameters
+        ----------
+        page: int
+            which page to return
+
+        perPage : int
+            the number of records to return per request
 
         Returns
         -------
         :class:`~namecom.ListDomainsResult`
             a response result instance with parsed response info
         """
-        resp = self._do('GET')
+        params = {
+            'page': page,
+            'perPage': perPage
+        }
+
+        resp = self._do('GET', params=params)
         return self._parse_result(resp, parse_list_domains, ListDomainsResult)
 
     def get_domain(self, domainName):
@@ -706,7 +745,12 @@ class EmailForwardingApi(_ApiBase):
         :class:`~namecom.ListEmailForwardingsResult`
             a response result instance with parsed response info
         """
-        resp = self._do('GET')
+        params = {
+            'page': page,
+            'perPage': perPage
+        }
+
+        resp = self._do('GET', params=params)
         return self._parse_result(resp, parse_list_email_forwardings, ListEmailForwardingsResult)
 
     def get_mail_forwarding(self, emailBox):
@@ -811,7 +855,7 @@ class TransferApi(_ApiBase):
         super(TransferApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/transfers'
 
-    def list_transfers(self):
+    def list_transfers(self, page=1, perPage=1000):
         """Lists all pending transfer in requests.
 
         To get the information related to a non-pending transfer, you can use the GetTransfer function for that.
@@ -821,7 +865,12 @@ class TransferApi(_ApiBase):
         :class:`~namecom.ListTransferResult`
             a response result instance with parsed response info
         """
-        resp = self._do('GET')
+        params = {
+            'page': page,
+            'perPage': perPage
+        }
+
+        resp = self._do('GET', params=params)
         return self._parse_result(resp, parse_list_transfers, ListTransfersResult)
 
     def get_transfer(self, domainName):
@@ -1059,17 +1108,30 @@ class VanityNameserverApi(_ApiBase):
         super(VanityNameserverApi, self).__init__(auth, use_test_env)
         self.endpoint = '/v4/domains/{domainName}/vanity_nameservers'.format(domainName=domainName)
 
-    def list_vanity_nameservers(self):
+    def list_vanity_nameservers(self, page=1, perPage=1000):
         """Lists all nameservers registered with the registry.
 
         It omits the IP addresses from the response. Those can be found from calling GetVanityNameserver.
+
+        Parameters
+        ----------
+        page: int
+            which page to return
+
+        perPage : int
+            the number of records to return per request
 
         Returns
         -------
         :class:`~namecom.ListVanityNameserversResult`
             a response result instance with parsed response info
         """
-        resp = self._do('GET')
+        params = {
+            'page': page,
+            'perPage': perPage
+        }
+
+        resp = self._do('GET', params)
         return self._parse_result(resp, parse_list_vanity_nameservers, ListVanityNameserversResult)
 
     def get_vanity_nameserver(self, hostname):

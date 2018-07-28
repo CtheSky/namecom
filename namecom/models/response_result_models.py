@@ -16,18 +16,25 @@ class RequestResult(object):
 
 
 class ListRecordsResult(RequestResult):
-
+    """Response class for ListRecords method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(ListRecordsResult, self).__init__(resp)
 
         self.records = []
-
-    def __iter__(self):
-        return iter(self.records)
+        self.nextPage = None
+        self.lastPage = None
 
 
 class GetRecordResult(RequestResult):
-
+    """Response class for GetRecord method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetRecordResult, self).__init__(resp)
 
@@ -35,7 +42,11 @@ class GetRecordResult(RequestResult):
 
 
 class CreateRecordResult(RequestResult):
-
+    """Response class for CreateRecord method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CreateRecordResult, self).__init__(resp)
 
@@ -43,7 +54,11 @@ class CreateRecordResult(RequestResult):
 
 
 class UpdateRecordResult(RequestResult):
-
+    """Response class for UpdateRecord method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(UpdateRecordResult, self).__init__(resp)
 
@@ -55,7 +70,11 @@ class DeleteRecordResult(RequestResult):
 
 
 class ListDnssecsResult(RequestResult):
-
+    """Response class for ListDnssecs method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(ListDnssecsResult, self).__init__(resp)
 
@@ -65,7 +84,11 @@ class ListDnssecsResult(RequestResult):
 
 
 class GetDnssecResult(RequestResult):
-
+    """Response class for GetDnssec method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetDnssecResult, self).__init__(resp)
 
@@ -73,7 +96,11 @@ class GetDnssecResult(RequestResult):
 
 
 class CreateDnssecResult(RequestResult):
-
+    """Response class for CreateDnssec method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CreateDnssecResult, self).__init__(resp)
 
@@ -85,7 +112,11 @@ class DeleteDnssecResult(RequestResult):
 
 
 class ListDomainsResult(RequestResult):
-
+    """Response class for ListDomains method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(ListDomainsResult, self).__init__(resp)
 
@@ -95,7 +126,11 @@ class ListDomainsResult(RequestResult):
 
 
 class GetDomainResult(RequestResult):
-
+    """Response class for GetDomain method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetDomainResult, self).__init__(resp)
 
@@ -103,7 +138,11 @@ class GetDomainResult(RequestResult):
 
 
 class SearchResult(RequestResult):
-
+    """Response class for Search method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(SearchResult, self).__init__(resp)
 
@@ -111,7 +150,11 @@ class SearchResult(RequestResult):
 
 
 class CreateDomainResult(RequestResult):
-
+    """Response class for CreateDomain method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CreateDomainResult, self).__init__(resp)
 
@@ -121,7 +164,11 @@ class CreateDomainResult(RequestResult):
 
 
 class EnableAutorenewResult(RequestResult):
-
+    """Response class for EnableAutorenew method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(EnableAutorenewResult, self).__init__(resp)
 
@@ -129,7 +176,11 @@ class EnableAutorenewResult(RequestResult):
 
 
 class DisableAutorenewResult(RequestResult):
-
+    """Response class for DisableAutorenew method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(DisableAutorenewResult, self).__init__(resp)
 
@@ -137,7 +188,11 @@ class DisableAutorenewResult(RequestResult):
 
 
 class SetNameserversResult(RequestResult):
-
+    """Response class for SetNameservers method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(SetNameserversResult, self).__init__(resp)
 
@@ -145,7 +200,11 @@ class SetNameserversResult(RequestResult):
 
 
 class SetContactsResult(RequestResult):
-
+    """Response class for SetContacts method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(SetContactsResult, self).__init__(resp)
 
@@ -153,7 +212,11 @@ class SetContactsResult(RequestResult):
 
 
 class RenewDomainResult(RequestResult):
-
+    """Response class for RenewDomain method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(RenewDomainResult, self).__init__(resp)
 
@@ -163,7 +226,11 @@ class RenewDomainResult(RequestResult):
 
 
 class PurchasePrivacyResult(RequestResult):
-
+    """Response class for PurchasePrivacy method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(PurchasePrivacyResult, self).__init__(resp)
 
@@ -173,7 +240,11 @@ class PurchasePrivacyResult(RequestResult):
 
 
 class GetAuthCodeForDomainResult(RequestResult):
-
+    """Response class for GetAuthCodeForDomain method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetAuthCodeForDomainResult, self).__init__(resp)
 
@@ -181,7 +252,11 @@ class GetAuthCodeForDomainResult(RequestResult):
 
 
 class LockDomainResult(RequestResult):
-
+    """Response class for LockDomain method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(LockDomainResult, self).__init__(resp)
 
@@ -189,7 +264,11 @@ class LockDomainResult(RequestResult):
 
 
 class UnlockDomainResult(RequestResult):
-
+    """Response class for UnlockDomain method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(UnlockDomainResult, self).__init__(resp)
 
@@ -197,7 +276,11 @@ class UnlockDomainResult(RequestResult):
 
 
 class CheckAvailabilityResult(RequestResult):
-
+    """Response class for CheckAvailability method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CheckAvailabilityResult, self).__init__(resp)
 
@@ -205,7 +288,11 @@ class CheckAvailabilityResult(RequestResult):
 
 
 class SearchStreamResult(RequestResult):
-
+    """Response class for SearchStream method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(SearchStreamResult, self).__init__(resp)
 
@@ -213,7 +300,11 @@ class SearchStreamResult(RequestResult):
 
 
 class ListEmailForwardingsResult(RequestResult):
-
+    """Response class for ListEmailForwardings method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(ListEmailForwardingsResult, self).__init__(resp)
 
@@ -223,7 +314,11 @@ class ListEmailForwardingsResult(RequestResult):
 
 
 class GetEmailForwardingResult(RequestResult):
-
+    """Response class for GetEmailForwarding method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetEmailForwardingResult, self).__init__(resp)
 
@@ -231,7 +326,11 @@ class GetEmailForwardingResult(RequestResult):
 
 
 class CreateEmailForwardingResult(RequestResult):
-
+    """Response class for CreateEmailForwarding method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CreateEmailForwardingResult, self).__init__(resp)
 
@@ -239,7 +338,11 @@ class CreateEmailForwardingResult(RequestResult):
 
 
 class UpdateEmailForwardingResult(RequestResult):
-
+    """Response class for UpdateEmailForwarding method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(UpdateEmailForwardingResult, self).__init__(resp)
 
@@ -251,15 +354,25 @@ class DeleteEmailForwardingResult(RequestResult):
 
 
 class ListTransfersResult(RequestResult):
-
+    """Response class for ListTransfers method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(ListTransfersResult, self).__init__(resp)
 
         self.transfers = []
+        self.nextPage = None
+        self.lastPage = None
 
 
 class GetTransferResult(RequestResult):
-
+    """Response class for GetTransfer method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetTransferResult, self).__init__(resp)
 
@@ -267,7 +380,11 @@ class GetTransferResult(RequestResult):
 
 
 class CreateTransferResult(RequestResult):
-
+    """Response class for CreateTransfer method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CreateTransferResult, self).__init__(resp)
 
@@ -277,7 +394,11 @@ class CreateTransferResult(RequestResult):
 
 
 class CancelTransferResult(RequestResult):
-
+    """Response class for CancelTransfer method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CancelTransferResult, self).__init__(resp)
 
@@ -285,15 +406,25 @@ class CancelTransferResult(RequestResult):
 
 
 class ListURLForwardinsResult(RequestResult):
-
+    """Response class for ListURLForwardins method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(ListURLForwardinsResult, self).__init__(resp)
 
         self.url_forwardings = []
+        self.nextPage = None
+        self.lastPage = None
 
 
 class GetURLForwardingResult(RequestResult):
-
+    """Response class for GetURLForwarding method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetURLForwardingResult, self).__init__(resp)
 
@@ -301,7 +432,11 @@ class GetURLForwardingResult(RequestResult):
 
 
 class CreateURLForwardingResult(RequestResult):
-
+    """Response class for CreateURLForwarding method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CreateURLForwardingResult, self).__init__(resp)
 
@@ -309,7 +444,11 @@ class CreateURLForwardingResult(RequestResult):
 
 
 class UpdateURLForwardingResult(RequestResult):
-
+    """Response class for UpdateURLForwarding method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(UpdateURLForwardingResult, self).__init__(resp)
 
@@ -321,7 +460,11 @@ class DeleteURLForwardingResult(RequestResult):
 
 
 class ListVanityNameserversResult(RequestResult):
-
+    """Response class for ListVanityNameservers method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(ListVanityNameserversResult, self).__init__(resp)
 
@@ -331,7 +474,11 @@ class ListVanityNameserversResult(RequestResult):
 
 
 class GetVanityNameserverResult(RequestResult):
-
+    """Response class for GetVanityNameserver method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(GetVanityNameserverResult, self).__init__(resp)
 
@@ -339,7 +486,11 @@ class GetVanityNameserverResult(RequestResult):
 
 
 class CreateVanityNameserverResult(RequestResult):
-
+    """Response class for CreateVanityNameserver method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(CreateVanityNameserverResult, self).__init__(resp)
 
@@ -347,7 +498,11 @@ class CreateVanityNameserverResult(RequestResult):
 
 
 class UpdateVanityNameserverResult(RequestResult):
-
+    """Response class for UpdateVanityNameserver method.
+    
+    Attributes
+    ----------
+    """
     def __init__(self, resp):
         super(UpdateVanityNameserverResult, self).__init__(resp)
 
