@@ -160,3 +160,13 @@ texinfo_documents = [
 
 # -- Extension configuration -------------------------------------------------
 autoclass_content = 'both'
+autodoc_member_order = 'bysource'
+
+def remove_module_docstring(app, what, name, obj, options, lines):
+    if what == "module" and name in ['namecom', 'namecom.result_models']:
+        del lines[:]
+
+
+def setup(app):
+    app.connect("autodoc-process-docstring", remove_module_docstring)
+
