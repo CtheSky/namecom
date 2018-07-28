@@ -10,7 +10,8 @@ License: MIT
 
 from . import exceptions
 from .auth import Auth
-from .models import (
+from . import result_models
+from .data_models import (
     Contact,
     Contacts,
     DNSSEC,

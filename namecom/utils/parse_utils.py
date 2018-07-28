@@ -7,7 +7,7 @@ Tianhong Chu [https://github.com/CtheSky]
 License: MIT
 """
 
-from ..models import *
+from ..data_models import *
 
 
 def parse_list_records(result, dct):

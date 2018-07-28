@@ -9,7 +9,7 @@ License: MIT
 
 import json
 import functools
-from ..models import DataModel
+from ..data_models import DataModel
 
 
 class DataModelEncoder(json.JSONEncoder):

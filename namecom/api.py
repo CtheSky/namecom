@@ -14,7 +14,7 @@ import requests
 
 from . import exceptions
 from .utils import *
-from .models import *
+from .result_models import *
 
 PRODUCT_API_HOST = 'https://api.name.com'
 TEST_API_HOST = 'https://api.dev.name.com'
@@ -104,7 +104,7 @@ class DnsApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.ListRecordsResult`
+        :class:`~namecom.result_models.ListRecordsResult`
             a response result instance with parsed response info
         """
         params = {
@@ -125,7 +125,7 @@ class DnsApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetRecordResult`
+        :class:`~namecom.result_models.GetRecordResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{id}'.format(id=id))
@@ -149,7 +149,7 @@ class DnsApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CreateRecordResult`
+        :class:`~namecom.result_models.CreateRecordResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -183,7 +183,7 @@ class DnsApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.UpdateRecordResult`
+        :class:`~namecom.result_models.UpdateRecordResult`
             a response result instance with parsed response info
         """
         data = json.dumps({
@@ -207,7 +207,7 @@ class DnsApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.DeleteRecordResult`
+        :class:`~namecom.result_models.DeleteRecordResult`
             a response result instance with parsed response info
         """
         resp = self._do('DELETE', relative_path='/{id}'.format(id=id))
@@ -250,7 +250,7 @@ class DnssecApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.ListDnssecsResult`
+        :class:`~namecom.result_models.ListDnssecsResult`
             a response result instance with parsed response info
         """
         params = {
@@ -271,7 +271,7 @@ class DnssecApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetDnssecResult`
+        :class:`~namecom.result_models.GetDnssecResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{digest}'.format(digest=digest))
@@ -296,7 +296,7 @@ class DnssecApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CreateDnssecResult`
+        :class:`~namecom.result_models.CreateDnssecResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -319,7 +319,7 @@ class DnssecApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.DeleteDnssecResult`
+        :class:`~namecom.result_models.DeleteDnssecResult`
             a response result instance with parsed response info
         """
         resp = self._do('DELETE', relative_path='/{digest}'.format(digest=digest))
@@ -359,7 +359,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.ListDomainsResult`
+        :class:`~namecom.result_models.ListDomainsResult`
             a response result instance with parsed response info
         """
         params = {
@@ -379,7 +379,7 @@ class DomainApi(_ApiBase):
             name of the domain to retrieve
         Returns
         -------
-        :class:`~namecom.GetDomainResult`
+        :class:`~namecom.result_models.GetDomainResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{domainName}'.format(domainName=domainName))
@@ -411,7 +411,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CreateDomainResult`
+        :class:`~namecom.result_models.CreateDomainResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -436,7 +436,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.EnableAutorenewResult`
+        :class:`~namecom.result_models.EnableAutorenewResult`
             a response result instance with parsed response info
         """
         resp = self._do('POST', relative_path='/{domainName}:enableAutorenew'.format(domainName=domainName))
@@ -452,7 +452,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.DisableAutorenewResult`
+        :class:`~namecom.result_models.DisableAutorenewResult`
             a response result instance with parsed response info
         """
         resp = self._do('POST', relative_path='/{domainName}:disableAutorenew'.format(domainName=domainName))
@@ -477,7 +477,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.RenewDomainResult`
+        :class:`~namecom.result_models.RenewDomainResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -499,7 +499,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetAuthCodeForDomainResult`
+        :class:`~namecom.result_models.GetAuthCodeForDomainResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{domainName}:getAuthCode'.format(domainName=domainName))
@@ -524,7 +524,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.PurchasePrivacyResult`
+        :class:`~namecom.result_models.PurchasePrivacyResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -549,7 +549,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.SetNameserversResult`
+        :class:`~namecom.result_models.SetNameserversResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -572,7 +572,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.SetContactsResult`
+        :class:`~namecom.result_models.SetContactsResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -592,7 +592,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.LockDomainResult`
+        :class:`~namecom.result_models.LockDomainResult`
             a response result instance with parsed response info
         """
         resp = self._do('POST', relative_path='/{domainName}:lock'.format(domainName=domainName))
@@ -608,7 +608,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.UnlockDomainResult`
+        :class:`~namecom.result_models.UnlockDomainResult`
             a response result instance with parsed response info
         """
         resp = self._do('POST', relative_path='/{domainName}:unlock'.format(domainName=domainName))
@@ -627,7 +627,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CheckAvailabilityResult`
+        :class:`~namecom.result_models.CheckAvailabilityResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -657,7 +657,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.SearchResult`
+        :class:`~namecom.result_models.SearchResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -689,7 +689,7 @@ class DomainApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.SearchStreamResult`
+        :class:`~namecom.result_models.SearchStreamResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -742,7 +742,7 @@ class EmailForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.ListEmailForwardingsResult`
+        :class:`~namecom.result_models.ListEmailForwardingsResult`
             a response result instance with parsed response info
         """
         params = {
@@ -763,7 +763,7 @@ class EmailForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetEmailForwardingResult`
+        :class:`~namecom.result_models.GetEmailForwardingResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{emailBox}'.format(emailBox=emailBox))
@@ -784,7 +784,7 @@ class EmailForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetEmailForwardingResult`
+        :class:`~namecom.result_models.GetEmailForwardingResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -808,7 +808,7 @@ class EmailForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetEmailForwardingResult`
+        :class:`~namecom.result_models.GetEmailForwardingResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -828,7 +828,7 @@ class EmailForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.DeleteEmailForwardingResult`
+        :class:`~namecom.result_models.DeleteEmailForwardingResult`
             a response result instance with parsed response info
         """
         resp = self._do('DELETE', relative_path='/{emailBox}'.format(emailBox=emailBox))
@@ -862,7 +862,7 @@ class TransferApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.ListTransferResult`
+        :class:`~namecom.result_models.ListTransferResult`
             a response result instance with parsed response info
         """
         params = {
@@ -883,7 +883,7 @@ class TransferApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetTransferResult`
+        :class:`~namecom.result_models.GetTransferResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{domainName}'.format(domainName=domainName))
@@ -911,7 +911,7 @@ class TransferApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CreateTransferResult`
+        :class:`~namecom.result_models.CreateTransferResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -935,7 +935,7 @@ class TransferApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CancelTransferResult`
+        :class:`~namecom.result_models.CancelTransferResult`
             a response result instance with parsed response info
         """
         resp = self._do('POST', relative_path='/{domainName}:cancel'.format(domainName=domainName))
@@ -973,7 +973,7 @@ class URLForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.ListURLForwardinsResult`
+        :class:`~namecom.result_models.ListURLForwardinsResult`
             a response result instance with parsed response info
         """
         params = {
@@ -994,7 +994,7 @@ class URLForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetURLForwardingResult`
+        :class:`~namecom.result_models.GetURLForwardingResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{host}'.format(host=host))
@@ -1024,7 +1024,7 @@ class URLForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CreateURLForwardingResult`
+        :class:`~namecom.result_models.CreateURLForwardingResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -1060,7 +1060,7 @@ class URLForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.UpdateURLForwardingResult`
+        :class:`~namecom.result_models.UpdateURLForwardingResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -1083,7 +1083,7 @@ class URLForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.DeleteURLForwardingResult`
+        :class:`~namecom.result_models.DeleteURLForwardingResult`
             a response result instance with parsed response info
         """
         resp = self._do('DELETE', relative_path='/{host}'.format(host=host))
@@ -1123,7 +1123,7 @@ class VanityNameserverApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.ListVanityNameserversResult`
+        :class:`~namecom.result_models.ListVanityNameserversResult`
             a response result instance with parsed response info
         """
         params = {
@@ -1144,7 +1144,7 @@ class VanityNameserverApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.GetVanityNameserverResult`
+        :class:`~namecom.result_models.GetVanityNameserverResult`
             a response result instance with parsed response info
         """
         resp = self._do('GET', relative_path='/{hostname}'.format(hostname=hostname))
@@ -1163,7 +1163,7 @@ class VanityNameserverApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.CreateVanityNameserverResult`
+        :class:`~namecom.result_models.CreateVanityNameserverResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -1187,7 +1187,7 @@ class VanityNameserverApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.UpdateVanityNameserverResult`
+        :class:`~namecom.result_models.UpdateVanityNameserverResult`
             a response result instance with parsed response info
         """
         data = json_dumps({
@@ -1209,7 +1209,7 @@ class VanityNameserverApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.DeleteVanityNameserverResult`
+        :class:`~namecom.result_models.DeleteVanityNameserverResult`
             a response result instance with parsed response info
         """
         resp = self._do('DELETE', relative_path='/{hostname}'.format(hostname=hostname))
