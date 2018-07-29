@@ -7,6 +7,24 @@ Tianhong Chu [https://github.com/CtheSky]
 License: MIT
 """
 
+_error2exception = {}  # map (status_code, message) tuple to Exception class
+
+
+def make_exception(resp):
+    """Parse response content and return a NamecomError instance."""
+    data = resp.json()
+
+    status_code = resp.status_code
+    headers = resp.headers
+    message = data.get('message')
+    details = data.get('details')
+
+    try:
+        klass = _error2exception[(status_code, message)]
+        return klass(status_code, headers, message, details)
+    except KeyError:
+        return NamecomError(status_code, headers, message, details)
+
 
 class NamecomError(Exception):
     """Base Exception class for namecom api."""
@@ -38,26 +56,7 @@ class NamecomError(Exception):
                (self.status_code, self.message, self.details)
 
 
-_error2exception = {}  # map (status_code, message) tuple to Exception class
-
-
-def make_exception(resp):
-    """Parse response content and return a NamecomError instance."""
-    data = resp.json()
-
-    status_code = resp.status_code
-    headers = resp.headers
-    message = data.get('message')
-    details = data.get('details')
-
-    try:
-        klass = _error2exception[(status_code, message)]
-        return klass(status_code, headers, message, details)
-    except KeyError:
-        return NamecomError(status_code, headers, message, details)
-
-
-def add_to_mapping(cls):
+def _add_to_mapping(cls):
     """Decorator that register exceptions to _error2exception."""
     status_code = getattr(cls, 'status_code', None)
     message = getattr(cls, 'message', None)
@@ -68,19 +67,22 @@ def add_to_mapping(cls):
     return cls
 
 
-@add_to_mapping
+@_add_to_mapping
 class PermissionDenied(NamecomError):
+    """Fixed params: status_code -> 403, message -> Permission Denied"""
     status_code = 403
     message = 'Permission Denied'
 
 
-@add_to_mapping
+@_add_to_mapping
 class InvalidArgument(NamecomError):
+    """Fixed params: status_code -> 400, message -> Invalid Argument"""
     status_code = 400
     message = 'Invalid Argument'
 
 
-@add_to_mapping
+@_add_to_mapping
 class ServerError(NamecomError):
+    """Fixed params: status_code -> 500, message -> Internal Error"""
     status_code = 500
     message = 'Internal Error'
