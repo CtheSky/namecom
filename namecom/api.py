@@ -973,7 +973,7 @@ class URLForwardingApi(_ApiBase):
 
         Returns
         -------
-        :class:`~namecom.result_models.ListURLForwardinsResult`
+        :class:`~namecom.result_models.ListURLForwardingsResult`
             a response result instance with parsed response info
         """
         params = {
@@ -982,7 +982,7 @@ class URLForwardingApi(_ApiBase):
         }
 
         resp = self._do('GET', params=params)
-        return self._parse_result(resp, parse_list_url_forwardings, ListURLForwardinsResult)
+        return self._parse_result(resp, parse_list_url_forwardings, ListURLForwardingsResult)
 
     def get_url_forwarding(self, host):
         """Returns an URL forwarding entry.

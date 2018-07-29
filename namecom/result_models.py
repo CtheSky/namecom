@@ -19,7 +19,7 @@ class RequestResult(object):
     status_code : int
         http status code
 
-    headers (MutableMapping):
+    headers : MutableMapping)
         http response headers from requests.Response
     """
     def __init__(self, resp):
@@ -543,7 +543,7 @@ class CancelTransferResult(RequestResult):
         self.transfer = None
 
 
-class ListURLForwardinsResult(RequestResult):
+class ListURLForwardingsResult(RequestResult):
     """Response class for ListURLForwardins method.
 
     Attributes
@@ -560,7 +560,7 @@ class ListURLForwardinsResult(RequestResult):
         It is only populated if there is another page of results after the current page.
     """
     def __init__(self, resp):
-        super(ListURLForwardinsResult, self).__init__(resp)
+        super(ListURLForwardingsResult, self).__init__(resp)
 
         self.url_forwardings = []
         self.nextPage = None
