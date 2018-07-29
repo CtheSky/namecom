@@ -1,6 +1,6 @@
 import unittest
 
-from namecom import URLForwardingApi
+from namecom import URLForwardingApi, exceptions
 from .sample import (
     correct_auth,
     url_forwarding_sample1,
@@ -13,6 +13,12 @@ api = URLForwardingApi(domainName=url_forwarding_sample1.domainName, auth=correc
 class URLForwardingApiTestCase(unittest.TestCase):
 
     def test_create_get_list_update_delete(self):
+        # clean existing data
+        try:
+            api.delete_url_forwarding(host=url_forwarding_sample1.host)
+        except exceptions.NamecomError:
+            pass
+
         result = api.create_url_forwarding(host=url_forwarding_sample1.host,
                                            forwardsTo=url_forwarding_sample1.forwardsTo,
                                            type=url_forwarding_sample1.type)

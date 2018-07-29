@@ -1,6 +1,6 @@
 import unittest
 
-from namecom import VanityNameserverApi
+from namecom import VanityNameserverApi, exceptions
 from .sample import (
     correct_auth,
     vanity_nameserver_sample1 as sample1,
@@ -13,6 +13,12 @@ api = VanityNameserverApi(domainName=sample1.domainName, auth=correct_auth, use_
 class VanityNameserverApiTestCase(unittest.TestCase):
 
     def test_create_get_list_update_delete(self):
+        # clean existing data
+        try:
+            api.delete_vanity_nameserver(sample1.hostname)
+        except exceptions.NamecomError:
+            pass
+
         result = api.create_vanity_nameserver(hostname=sample1.hostname, ips=sample1.ips)
         self.assertEqual(result.vanityNameserver, sample1)
 

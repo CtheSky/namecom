@@ -1,6 +1,6 @@
 import unittest
 
-from namecom import TransferApi
+from namecom import TransferApi, exceptions
 from .sample import correct_auth
 
 api = TransferApi(auth=correct_auth, use_test_env=True)
@@ -14,6 +14,12 @@ class TransferApiTestCase(unittest.TestCase):
 
     @unittest.skip('should use correct auth code and price')
     def test_create_get_list_cancel_transfer(self):
+        # clean existing data
+        try:
+            api.cancel_transfer(domainName)
+        except exceptions.NamecomError:
+            pass
+
         result = api.create_transfer(domainName=domainName, authCode=authCode, purchasePrice=price)
         self.assertIsNotNone(result.order)
         self.assertEqual(result.totalPaid, price)
