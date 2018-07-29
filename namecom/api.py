@@ -1131,7 +1131,7 @@ class VanityNameserverApi(_ApiBase):
             'perPage': perPage
         }
 
-        resp = self._do('GET', params)
+        resp = self._do('GET', params=params)
         return self._parse_result(resp, parse_list_vanity_nameservers, ListVanityNameserversResult)
 
     def get_vanity_nameserver(self, hostname):
