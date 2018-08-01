@@ -7,7 +7,7 @@ Tianhong Chu [https://github.com/CtheSky]
 License: MIT
 """
 
-_error2exception = {}  # map (status_code, message) tuple to Exception class
+_CODE_MSG_2_EXCEPTION = {}  # map (status_code, message) tuple to Exception class
 
 
 def make_exception(resp):
@@ -20,7 +20,7 @@ def make_exception(resp):
     details = data.get('details')
 
     try:
-        klass = _error2exception[(status_code, message)]
+        klass = _CODE_MSG_2_EXCEPTION[(status_code, message)]
         return klass(status_code, headers, message, details)
     except KeyError:
         return NamecomError(status_code, headers, message, details)
@@ -44,8 +44,10 @@ class NamecomError(Exception):
             a general error message
 
         details : str
-            an optional "details" key which contains a string with additional information about the error
+            an optional "details" key which contains a string with additional
+            information about the error
         """
+        super(NamecomError, self).__init__()
         self.status_code = status_code
         self.headers = headers
         self.message = message
@@ -57,12 +59,12 @@ class NamecomError(Exception):
 
 
 def _add_to_mapping(cls):
-    """Decorator that register exceptions to _error2exception."""
+    """Decorator that register exceptions to _CODE_MSG_2_EXCEPTION mapping."""
     status_code = getattr(cls, 'status_code', None)
     message = getattr(cls, 'message', None)
 
     if status_code is not None and message is not None:
-        _error2exception[(status_code, message)] = cls
+        _CODE_MSG_2_EXCEPTION[(status_code, message)] = cls
 
     return cls
 
