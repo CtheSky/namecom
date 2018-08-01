@@ -11,7 +11,7 @@ License: MIT
 __all__ = ['Auth']
 
 
-class Auth:
+class Auth(object):
     """
     The class for http basic authentication.
     Used by api class to do authenticate request.
@@ -29,4 +29,3 @@ class Auth:
         """
         self.username = username
         self.token = token
-
