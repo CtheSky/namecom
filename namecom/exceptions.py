@@ -82,6 +82,13 @@ class InvalidArgument(NamecomError):
 
 
 @_add_to_mapping
+class NotFoundError(NamecomError):
+    """Fixed params: status_code -> 404, message -> Not Found"""
+    status_code = 404
+    message = 'Not Found'
+
+
+@_add_to_mapping
 class ServerError(NamecomError):
     """Fixed params: status_code -> 500, message -> Internal Error"""
     status_code = 500

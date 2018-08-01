@@ -26,3 +26,10 @@ class ExceptionTestCase(unittest.TestCase):
 
         self.assertRaises(exceptions.ServerError, should_raise)
 
+    def test_not_found(self):
+        api = TransferApi(auth=correct_auth, use_test_env=True)
+
+        def should_raise():
+            api.get_transfer('notexist.org')
+
+        self.assertRaises(exceptions.NotFoundError, should_raise)
