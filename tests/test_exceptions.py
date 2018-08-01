@@ -33,3 +33,11 @@ class ExceptionTestCase(unittest.TestCase):
             api.get_transfer('notexist.org')
 
         self.assertRaises(exceptions.NotFoundError, should_raise)
+
+    def test_invalid_argument(self):
+        api = TransferApi(auth=correct_auth, use_test_env=True)
+
+        def should_raise():
+            api.create_transfer('example.org', authCode='Authc0de', purchasePrice=100)
+
+        self.assertRaises(exceptions.InvalidArgumentError, should_raise)
