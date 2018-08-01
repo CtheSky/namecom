@@ -16,7 +16,7 @@ class ExceptionTestCase(unittest.TestCase):
         def should_raise():
             api.get_record(sample1.id)
 
-        self.assertRaises(exceptions.PermissionDenied, should_raise)
+        self.assertRaises(exceptions.PermissionDeniedError, should_raise)
 
     def test_server_error(self):
         api = TransferApi(auth=correct_auth, use_test_env=True)

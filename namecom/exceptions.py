@@ -68,14 +68,14 @@ def _add_to_mapping(cls):
 
 
 @_add_to_mapping
-class PermissionDenied(NamecomError):
+class PermissionDeniedError(NamecomError):
     """Fixed params: status_code -> 403, message -> Permission Denied"""
     status_code = 403
     message = 'Permission Denied'
 
 
 @_add_to_mapping
-class InvalidArgument(NamecomError):
+class InvalidArgumentError(NamecomError):
     """Fixed params: status_code -> 400, message -> Invalid Argument"""
     status_code = 400
     message = 'Invalid Argument'
