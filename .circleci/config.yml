@@ -31,4 +31,4 @@ jobs:
           command: |
             . venv/bin/activate
             pytest --cov=namecom tests/
-            codecov a822dff0-c1fe-4ccc-980e-4792f0370ab9
+            codecov --token a822dff0-c1fe-4ccc-980e-4792f0370ab9
