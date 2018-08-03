@@ -14,7 +14,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../'))
+sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- Project information -----------------------------------------------------
@@ -163,7 +163,7 @@ autoclass_content = 'both'
 autodoc_member_order = 'bysource'
 
 def remove_module_docstring(app, what, name, obj, options, lines):
-    if what == "module" and name in ['namecom', 'namecom.result_models']:
+    if what == "module" and name in ['namecom', 'namecom.result_models', 'namecom.exceptions']:
         del lines[:]
 
 

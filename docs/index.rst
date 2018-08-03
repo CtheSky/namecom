@@ -19,6 +19,18 @@ with *pip*::
 Quick Start
 -----------
 
+Use `DnsApi` to create a dns record:
+
+.. sourcecode:: python
+
+    from namecom import Auth, DnsApi
+
+    auth = Auth('username', 'access_token')
+    api = DnsApi(domainName='example.org', auth=auth)
+
+    result = api.create_record(host='test', type='A', answer='10.0.0.1')
+
+
 To access the service, an access token is required. You could find or generate one at
 `API Token Manage Page <https://www.name.com/account/settings/api>`_:
 
@@ -64,12 +76,12 @@ Let's find out how to create a dns record using python's built-in `help`:
     |      :class:`~namecom.result_models.CreateRecordResult`
     |          a response result instance with parsed response info
 
-You can also see the :ref:`api-reference-label` and :ref:`data_model-reference-label` for more details.
+You can also see the :ref:`api-reference-label` for more details.
 Now let's try this method:
 
 .. sourcecode:: python
 
-    >>> result = api.create(host='test', type='A', answer='10.0.0.1')
+    >>> result = api.create_record(host='test', type='A', answer='10.0.0.1')
 
 The result of api calls are strongly typed by result models. From the docstring above we know it's an instance of
 `CreateRecordResult`. Let's see what's in this class:
@@ -95,9 +107,46 @@ It has a record attribute of type :class:`~namecom.Record` which contains the pa
 
 For most use cases, you can follow these steps to find out how to use it.
 
-More About Api
+More About API
 --------------
 
+There are seven API in total:
+
+* :class:`~namecom.DnsApi`
+* :class:`~namecom.DnssecApi`
+* :class:`~namecom.DomainApi`
+* :class:`~namecom.EmailForwardingApi`
+* :class:`~namecom.TransferApi`
+* :class:`~namecom.URLForwardingApi`
+* :class:`~namecom.VanityNameserverApi`
+
+
+And there are two types of model:
+
+* :ref:`Data Model <data-model-reference-label>` - represent entities for name.com api, like domain, dns record and email forwarding.
+* :ref:`Result Model <result-model-reference-label>` - represent api response, contains data models and other fields like `nextPage` and `lastPage`.
+
+The name of api method and its params are almost identical to the official name.com documentation.
+When calling these methods, they will do the following things:
+
+* construct and send request
+* check response and throw error if necessary
+* parse response into result model and return
+
+.. image:: workflow.png
+
+
+More References
+---------------
+
+.. toctree::
+   :maxdepth: 2
+   :titlesonly:
+
+   api
+   data_model
+   result_model
+   exception
 
 Usage Example
 -------------
@@ -111,14 +160,18 @@ For more examples, test cases for the project illustrate how to interact with ea
 * `UrlForwardingApi <https://github.com/CtheSky/namecom/blob/master/tests/test_url_forwarding_api.py>`_
 * `VanityNameserverApi <https://github.com/CtheSky/namecom/blob/master/tests/test_vanity_nameserver_api.py>`_
 
-.. toctree::
-   :maxdepth: 2
-   :titlesonly:
+Hey, it's not Snake Case!
+-------------------------
+As you may have already noticed, some parameters of api method and data model attributes are not
+snake case. I feel guilty if I don't explain, so here are the reasons:
 
-   api
-   data_model
-   result_model
+* For people who want to use name.com api, they should already have read the official api doc.
+  Keeping the same name convention from official doc would made it more consistent and nature to use.
+* Keeping names consistent with official api brings convenience when parsing response and building request.
 
+And I feel even less guilty after reading `PEP8 <https://www.python.org/dev/peps/pep-0008/>`_:
+
+   mixedCase is allowed only in contexts where that's already the prevailing style
 
 
 

@@ -1,7 +1,7 @@
-.. _data_model-reference-label:
+.. _data-model-reference-label:
 
-Model Reference
-===============
+Data Model Reference
+====================
 
 .. automodule:: namecom
 .. autoclass:: Record

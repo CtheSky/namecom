@@ -1,7 +1,7 @@
 .PHONY: build_doc install install-dev
 
 build_doc:
-	sphinx-build -E -b html docs/source docs/build
+	sphinx-build -E -b html docs docs/_build
 
 install:
 	pip install -r requirements.txt

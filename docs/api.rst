@@ -1,7 +1,7 @@
 .. _api-reference-label:
 
 API Reference
-===============
+=============
 
 .. automodule:: namecom
 
@@ -17,4 +17,13 @@ API Reference
    :members:
 
 .. autoclass:: EmailForwardingApi
+   :members:
+
+.. autoclass:: TransferApi
+   :members:
+
+.. autoclass:: URLForwardingApi
+   :members:
+
+.. autoclass:: VanityNameserverApi
    :members:
