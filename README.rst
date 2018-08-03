@@ -15,7 +15,7 @@ Installation
 If you haven't already, start by installing it
 with *pip*::
 
-   pip install --upgrade namecom
+   pip install --upgrade pynamecom
 
 Quick Start
 -----------
