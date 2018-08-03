@@ -701,7 +701,7 @@ class DomainApi(_ApiBase):
 
         resp = self._do('POST', relative_path=':searchStream', data=data)
         result = SearchStreamResult(resp)
-        parse_search_stream(result, [json.loads(obj) for obj in resp.content.strip().split('\n')])
+        parse_search_stream(result, [json.loads(obj) for obj in resp.content.strip().split()])
 
         return result
 
