@@ -88,6 +88,7 @@ class DomainApiTestCase(unittest.TestCase):
         search_stream_result = api.search_stream(keyword='cthesky', timeout=5000)
 
         results = search_stream_result.results
+        results = list(results)
         if results:
             self.assertTrue(all([_.domainName for _ in results]))
             self.assertTrue(all([_.sld for _ in results]))

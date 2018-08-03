@@ -699,9 +699,9 @@ class DomainApi(_ApiBase):
             'promoCode': promoCode
         })
 
-        resp = self._do('POST', relative_path=':searchStream', data=data)
+        resp = self._do('POST', relative_path=':searchStream', data=data, stream=True)
         result = SearchStreamResult(resp)
-        parse_search_stream(result, [json.loads(obj) for obj in resp.content.strip().split()])
+        parse_search_stream(result, resp)
 
         return result
 

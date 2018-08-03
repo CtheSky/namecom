@@ -6,6 +6,7 @@ Implements functions to parse api response result.
 Tianhong Chu [https://github.com/CtheSky]
 License: MIT
 """
+import json
 
 from ..data_models import *
 
@@ -114,8 +115,8 @@ def parse_search(result, dct):
     result.results = [DomainSearchResult.from_dict(obj) for obj in dct.get('results', [])]
 
 
-def parse_search_stream(result, dct):
-    result.results = [DomainSearchResult.from_dict(obj) for obj in dct]
+def parse_search_stream(result, resp):
+    result.results = (DomainSearchResult.from_dict(json.loads(obj)) for obj in resp.iter_lines())
 
 
 def parse_list_email_forwardings(result, dct):

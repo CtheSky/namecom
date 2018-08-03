@@ -391,7 +391,7 @@ class SearchStreamResult(RequestResult):
     Attributes
     ----------
     results : [] :class:`~namecom.DomainSearchResult`
-        instance of DomainSearchResult
+        a generator yielding of DomainSearchResult
     """
     def __init__(self, resp):
         super(SearchStreamResult, self).__init__(resp)
