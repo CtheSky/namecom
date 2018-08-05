@@ -1,4 +1,4 @@
-.. namecompy documentation master file, created by
+.. namecom documentation master file, created by
    sphinx-quickstart on Sat Jun 30 17:30:40 2018.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -14,7 +14,7 @@ Installation
 If you haven't already, start by installing it
 with *pip*::
 
-   pip install --upgrade namecom
+   pip install --upgrade pynamecom
 
 Quick Start
 -----------

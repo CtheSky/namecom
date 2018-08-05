@@ -10,7 +10,7 @@ with open(os.path.join(this_dir, 'README.rst')) as f:
 
 setup(
     name='pynamecom',
-    version='0.1.1',
+    version='0.1.2',
     description='Python Library for Name.com v4 API',
     long_description=long_description,
     author='Tianhong Chu',
