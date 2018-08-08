@@ -97,9 +97,6 @@ class Record(DataModel):
         self.ttl = ttl
         self.priority = priority
 
-    def __str__(self):
-        return 'Record: id[%s] host[%s] type[%s] answer[%s]' % (self.id, self.host, self.type, self.answer)
-
 
 class DNSSEC(DataModel):
     """
@@ -181,9 +178,6 @@ class Domain(DataModel):
         self.expireDate = expireDate
         self.createDate = createDate
         self.renewalPrice = renewalPrice
-
-    def __str__(self):
-        return 'Domain: domainName[%s]' % self.domainName
 
     @classmethod
     def from_dict(cls, dct):
