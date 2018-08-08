@@ -36,5 +36,7 @@ class TransferApiTestCase(unittest.TestCase):
         result = api.cancel_transfer(domainName)
         self.assertEqual(result.transfer.domainName, domainName)
 
-
+    def test_list_transfers(self):
+        result = api.list_transfers()
+        self.assertEqual(result.status_code, 200)
 
