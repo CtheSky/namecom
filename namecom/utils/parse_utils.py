@@ -116,7 +116,7 @@ def parse_search(result, dct):
 
 
 def parse_search_stream(result, resp):
-    result.results = (DomainSearchResult.from_dict(json.loads(obj)) for obj in resp.iter_lines())
+    result.results = (DomainSearchResult.from_dict(json.loads(obj)) for obj in resp.iter_lines(decode_unicode=True))
 
 
 def parse_list_email_forwardings(result, dct):
