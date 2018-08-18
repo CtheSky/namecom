@@ -1,5 +1,6 @@
 -r requirements.txt
 
+twine
 Sphinx>=1.7.0
 codecov>=2.0.0
 pytest>=3.6.0
