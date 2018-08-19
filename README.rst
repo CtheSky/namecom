@@ -1,11 +1,13 @@
 Overview
 ------------
 .. image:: https://circleci.com/gh/CtheSky/namecom.svg?style=svg
-    :target: https://circleci.com/gh/CtheSky/namecom
+  :target: https://circleci.com/gh/CtheSky/namecom
 .. image:: https://codecov.io/gh/CtheSky/namecom/branch/master/graph/badge.svg
   :target: https://codecov.io/gh/CtheSky/namecom
 .. image:: https://img.shields.io/badge/python-2.7%2B%2C%203.4%2B-brightgreen.svg
   :target: https://github.com/CtheSky/namecom
+.. image:: https://img.shields.io/badge/pypi-v0.1.3-brightgreen.svg
+  :target: https://pypi.org/project/pynamecom/
 
 *namecom* is a python library for the v4 api of `name.com <https://www.name.com>`_, a domain name registrar.
 
