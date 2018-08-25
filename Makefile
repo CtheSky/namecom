@@ -1,6 +1,6 @@
-.PHONY: build_doc install install-dev test publish
+.PHONY: doc install install-dev test publish
 
-build_doc:
+doc:
 	sphinx-build -E -b html docs docs/_build
 
 install:
