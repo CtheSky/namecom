@@ -9,7 +9,7 @@ Overview
 .. image:: https://img.shields.io/badge/pypi-v0.1.3-brightgreen.svg
   :target: https://pypi.org/project/pynamecom/
 
-*namecom* is a python library for the v4 api of `name.com <https://www.name.com>`_, a domain name registrar.
+*namecom* is a python library that wraps v4 api of `name.com <https://www.name.com>`_, a domain name registrar.
 
 Installation
 ------------
